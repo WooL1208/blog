@@ -14,42 +14,31 @@
 		</li>
 	</ul>
 
-	<div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-		<form>
-		<!-- Name input -->
-		<div class="form-outline mb-4">
-			<input type="text" id="registerName" class="form-control" />
-			<label class="form-label" for="registerName">Name</label>
-		</div>
+	<div class="tab-content">
+		<div class="tab-pane fade show active" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
+			<form>
+				<!-- Name input -->
+				<div class="form-outline mb-4">
+					<label class="form-label" for="registerName">Name</label>
+					<input type="text" id="registerName" class="form-control" />
+				</div>
 
-		<!-- Username input -->
-		<div class="form-outline mb-4">
-			<input type="text" id="registerUsername" class="form-control" />
-			<label class="form-label" for="registerUsername">Username</label>
-		</div>
+				<!-- Email input -->
+				<div class="form-outline mb-4">
+					<label class="form-label" for="registerEmail">Account</label>
+					<input type="email" id="registerEmail" class="form-control" />
+				</div>
 
-		<!-- Email input -->
-		<div class="form-outline mb-4">
-			<input type="email" id="registerEmail" class="form-control" />
-			<label class="form-label" for="registerEmail">Email</label>
-		</div>
+				<!-- Password input -->
+				<div class="form-outline mb-4">
+					<label class="form-label" for="registerPassword">Password</label>
+					<input type="password" id="registerPassword" class="form-control" />
+				</div>
 
-		<!-- Password input -->
-		<div class="form-outline mb-4">
-			<input type="password" id="registerPassword" class="form-control" />
-			<label class="form-label" for="registerPassword">Password</label>
+				<!-- Submit button -->
+				<button type="submit" class="btn btn-primary btn-block mb-3">Register</button>
+			</form>
 		</div>
-
-		<!-- Repeat Password input -->
-		<div class="form-outline mb-4">
-			<input type="password" id="registerRepeatPassword" class="form-control" />
-			<label class="form-label" for="registerRepeatPassword">Repeat password</label>
-		</div>
-
-		<!-- Submit button -->
-		<button type="submit" class="btn btn-primary btn-block mb-3">Sign in</button>
-		</form>
-	</div>
 	</div>
 	<!-- Pills content -->
 {% endblock %}
