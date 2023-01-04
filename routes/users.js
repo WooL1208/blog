@@ -10,7 +10,7 @@ router.get("/login", function (req, res, next) {
 });
 
 router.post('/login', async function (req, res, next) {
-  const { username, password } = req.body;
+  const { account, password } = req.body;
 
   const response = fetch("http://localhost:3000/api/auth", {
     method: "POST",
