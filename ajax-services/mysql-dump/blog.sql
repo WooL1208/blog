@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article` (
   `user_id` int NOT NULL,
   `id` int NOT NULL AUTO_INCREMENT,
+  `category` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `create_time` datetime NOT NULL,
@@ -19,8 +20,8 @@ CREATE TABLE `article` (
   CONSTRAINT `article_ibfk_4` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `article` (`user_id`, `id`, `title`, `content`, `create_time`) VALUES
-(2,	1,	'test',	'test',	'2022-12-30 08:24:51');
+INSERT INTO `article` (`user_id`, `id`, `category`, `title`, `content`, `create_time`) VALUES
+(2,	1,	'',	'test',	'test',	'2022-12-30 08:24:51');
 
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
@@ -52,4 +53,4 @@ INSERT INTO `user` (`id`, `is_admin`, `name`, `account`, `password`) VALUES
 (2,	0,	'user',	'user',	'user'),
 (3,	1,	'zuki',	'zuki',	'zuki');
 
--- 2022-12-30 08:33:21
+-- 2023-01-04 06:50:23
