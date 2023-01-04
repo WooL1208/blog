@@ -1,5 +1,5 @@
 var express = require('express');
-var { promisePool: mysql } = require('../lib/mysql');
+var { promisePool: mysql } = require('../../lib/mysql');
 var router = express.Router();
 
 
