@@ -26,7 +26,7 @@ router.post('/login', async function (req, res, next) {
       res_json = await resp.json();
 
       if(res_json.status){
-        res.cookie("token", res_json.token);
+        res.cookie("token", res_json.token, { signed: true });
         return res.redirect("/");
       }else{
         return res.redirect("/users/register?error=登入失敗");
@@ -35,6 +35,12 @@ router.post('/login', async function (req, res, next) {
       return res.redirect("/users/register?error=API請求失敗");
     }
   });
+});
+
+/* 登出 */
+router.get("/logout", function (req, res, next) {
+  res.clearCookie("token");
+  res.redirect("/");
 });
 
 /* 註冊*/ 
