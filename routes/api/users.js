@@ -1,10 +1,11 @@
 var express = require('express');
 var { promisePool: mysql } = require('../../lib/mysql');
 var router = express.Router();
+var argon2 = require('argon2');
 
-/* 
-  獲取使用者資訊 
-  get /users
+/*
+  獲取使用者資訊
+  get /api/users
 */
 router.get('/', async function (req, res, next) {
   const [rows, fields] = await mysql.execute('SELECT id, is_admin, name, account FROM `user`');
@@ -13,7 +14,7 @@ router.get('/', async function (req, res, next) {
 
 
 router.get('/test', async function (req, res, next) {
-  const [rows, fields] = await mysql.execute('SELECT * FROM `user` WHERE account = ?', ['admin']);
+  const [rows, fields] = await mysql.execute('SELECT * FROM `user` WHERE account = ?', ['test2']);
   if (rows.length !== 0) {
     return res.json(
       {
@@ -32,9 +33,9 @@ router.get('/test', async function (req, res, next) {
 });
 
 
-/* 
-  註冊 
-  post /users
+/*
+  註冊
+  post /api/users
 */
 router.post('/', async function (req, res, next) {
   const { name, account, password } = req.body;
@@ -42,7 +43,7 @@ router.post('/', async function (req, res, next) {
 
   // 檢查帳號是否重複
   const [rows_check, fields_check] = await mysql.execute('SELECT * FROM `user` WHERE account = ?', [account]);
-  if (rows.length !== 0) {
+  if (rows_check.length !== 0) {
     return res.json(
       {
         'status': false,

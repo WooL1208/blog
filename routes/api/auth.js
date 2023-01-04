@@ -1,11 +1,11 @@
 var express = require('express');
 var { promisePool: mysql } = require('../../lib/mysql');
 var router = express.Router();
+var argon2 = require('argon2');
 
-
-/* 
-  登入 
-  post /auth 
+/*
+  登入
+  post /api/auth
 */
 router.post('/', async function (req, res, next) {
   const { username, password } = req.body;
@@ -37,9 +37,9 @@ router.post('/', async function (req, res, next) {
   })
 });
 
-/* 
-  登出 
-  delete /auth 
+/*
+  登出
+  delete /api/auth
 */
 router.get('/logout', function (req, res, next) {
   res.clearCookie('user');
