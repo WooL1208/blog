@@ -1,0 +1,30 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+  <h1>{{title}}</h1>
+  {% if (error) %}
+  <p>username or password fail</p>
+  {% endif %}
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="list-group">
+        {% if (user) %}
+        <a href="/user" class="list-group-item list-group-item-action active" aria-current="true">
+          歡迎 {{user}} 登入
+        </a>
+        <a href="/user/recharge" class="list-group-item list-group-item-action">儲值</a>
+        <a href="#" class="list-group-item list-group-item-action">金額紀錄</a>
+        <a href="/user/logout" class="list-group-item list-group-item-action">登出</a>
+        {% else %}
+        <a href="/user/login" class="list-group-item list-group-item-action">登入</a>
+        <a href="/user/register" class="list-group-item list-group-item-action">註冊</a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-sm-9">
+      功能內頁
+    </div>
+  </div>
+
+{% endblock %}
