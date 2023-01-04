@@ -6,7 +6,7 @@ router.get("/login", function (req, res, next) {
   const { user } = req.signedCookies;
   const { error } = req.query;
 
-  res.render("users/login", { title: "會員中心", user, error });
+  res.render("users/login", { title: "登入", user, error });
 });
 
 router.get("/register", function (req, res, next) {
