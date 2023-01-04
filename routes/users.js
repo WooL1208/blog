@@ -26,7 +26,7 @@ router.post('/login', async function (req, res, next) {
       res_json = await resp.json();
 
       if(res_json.status){
-        res.cookie("tonken", res_json.token);
+        res.cookie("token", res_json.token);
         return res.redirect("/");
       }else{
         return res.redirect("/users/register?error=登入失敗");
