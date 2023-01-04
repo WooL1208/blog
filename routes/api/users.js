@@ -13,6 +13,10 @@ router.get('/', async function (req, res, next) {
 });
 
 
+/*
+  測試用
+  get /api/users/test
+*/
 router.get('/test', async function (req, res, next) {
   const [rows, fields] = await mysql.execute('SELECT * FROM `user` WHERE account = ?', ['test2']);
   if (rows.length !== 0) {
