@@ -3,9 +3,10 @@ var { promisePool: mysql } = require('../../lib/mysql');
 var router = express.Router();
 const jwt = require('jsonwebtoken');
 var argon2 = require('argon2');
+require('dotenv').config();
 
 function generateAccessToken(account) {
-  return jwt.sign(account, process.env.TOKEN_SECRET, { expiresIn: '30d' });
+  return jwt.sign({'account' : account}, process.env.TOKEN_SECRET, { expiresIn: '7d' });
 }
 
 /*
@@ -37,23 +38,12 @@ router.post('/', async function (req, res, next) {
     })
   }
 
+  const token = generateAccessToken(account);
   return res.json({
     'status': true,
-    'token': generateAccessToken(user.account),
+    'token': token,
     'message': '成功',
   })
 });
-
-/*
-  登出
-  delete /api/auth
-*/
-// router.get('/logout', function (req, res, next) {
-//   res.clearCookie('user');
-//   return res.json({
-//     'status': true,
-//     'message': '成功',
-//   })
-// });
 
 module.exports = router;
