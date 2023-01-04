@@ -14,7 +14,7 @@ function generateAccessToken(account) {
 */
 
 router.post('/', async function (req, res, next) {
-  const { username: account, password } = req.body;
+  const { account, password } = req.body;
 
   const [rows, fields] = await mysql.execute('SELECT * FROM `user` WHERE account = ?', [account]);
 
