@@ -9,4 +9,8 @@ router.get('/login', function(req, res, next) {
   res.render('users/login', { title: '會員中心', user, error });
 });
 
+router.get('/register', function (req, res, next) {
+  res.render('users/register', { title: '註冊' })
+});
+
 module.exports = router;
