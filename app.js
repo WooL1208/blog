@@ -10,7 +10,6 @@ var usersRouter = require('./routes/users');
 
 // backend routes
 var usersApiRouter = require('./routes/api/users');
-var authApiRouter = require('./routes/api/auth');
 
 var app = express();
 require('dotenv').config();
@@ -31,7 +30,6 @@ app.use('/users', usersRouter);
 
 // backend routes
 app.use('/api/users', usersApiRouter);
-app.use('/api/auth', authApiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
