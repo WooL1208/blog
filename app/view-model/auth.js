@@ -17,7 +17,7 @@ async function login(account, password) {
     }
 
     // 判斷密碼是否正確
-    const user = rows[0];
+    const user = ret_account[0];
     if (!await argon2.verify(user.password, password)) {
         return false;
     }
