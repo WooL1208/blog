@@ -4,7 +4,7 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
   const { token } = req.signedCookies;
-  res.render('index', { title: 'Express', token});
+  res.render('index', { title: 'Blog', token});
 });
 
 module.exports = router;
