@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 // backend routes
+var authApiRouter = require('./routes/api/auth');
 var usersApiRouter = require('./routes/api/users');
 
 var app = express();
@@ -29,6 +30,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // backend routes
+app.use('/api/auth', authApiRouter);
 app.use('/api/users', usersApiRouter);
 
 // catch 404 and forward to error handler

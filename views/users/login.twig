@@ -16,8 +16,7 @@
 	<!-- Pills content -->
 	<div class="tab-content">
 		<div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-			<form
-				action="/users/login" method="post">
+			<form>
 				<!-- Account input -->
 				<div class="form-outline mb-4">
 					<label class="form-label" for="account">Account</label>
@@ -32,14 +31,15 @@
 
 				<!-- Submit button -->
 				<div style="text-align:center">
-					<button type="submit" class="btn btn-primary btn-block mb-4 text-center">Sign in</button>
+					<button type="submit" class="btn btn-primary btn-block mb-4 text-center" id="login">Sign in</button>
 				</div>
-				{% if error %}
-					<div class="alert alert-danger" role="alert">
-						帳號或密碼錯誤
-					</div>
-				{% endif %}
+				<div class="alert alert-danger" role="alert" style="visibility:hidden" id="warning">
+					帳號或密碼錯誤
+				</div>
 			</form>
 		</div>
 	</div>
-</div></body></html>{% endblock %}
+</div>
+
+<script src="/javascripts/auth.js"></script>
+{% endblock %}

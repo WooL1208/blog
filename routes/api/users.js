@@ -1,7 +1,8 @@
 var express = require('express');
+require('dotenv').config();
 var { promisePool: mysql } = require('../../lib/mysql');
+var { register } = require('../../app/view-model/users');
 var router = express.Router();
-var argon2 = require('argon2');
 
 /*
   獲取使用者資訊
@@ -33,6 +34,21 @@ router.get('/test', async function (req, res, next) {
         'message': '成功',
       }
     )
+  }
+});
+
+/*
+  註冊
+  post /api/users
+*/
+router.post("/", async function (req, res, next) {
+  const { name, account, password } = req.body;
+
+  if (await register(name, account, password)) {
+      return res.json({ status: true, message: '註冊成功' });
+  }
+  else {
+      return res.json({ status: false, message: '註冊失敗' });
   }
 });
 
