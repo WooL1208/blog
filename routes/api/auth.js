@@ -24,8 +24,13 @@ router.post('/', async function (req, res, next) {
     delete /api/auth
 */
 router.delete("/", function (req, res, next) {
-    res.clearCookie("token");
-    res.redirect("/");
+    try {
+        res.clearCookie("token");
+        return res.json({ status: true, message: "登出成功" });
+    } catch (err) {
+        return res.json({ status: false, message: "登出失敗" });
+    }
+
 });
 
 module.exports = router;
