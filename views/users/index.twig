@@ -1,30 +1,93 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-  <h1>{{title}}</h1>
-  {% if (error) %}
-  <p>username or password fail</p>
-  {% endif %}
+	<div id="login-page">
+		<h1>登入</h1>
+		<!-- Pills navs href="#pills-login"-->
+		<ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+			<li class="nav-item" role="presentation">
+				<a class="nav-link active tab-login" data-mdb-toggle="pill" role="tab" aria-controls="pills-login" aria-selected="true">Login</a>
+			</li>
+			<li class="nav-item" role="presentation">
+				<a class="nav-link tab-register" data-mdb-toggle="pill" role="tab" aria-controls="pills-register" aria-selected="false">Register</a>
+			</li>
+		</ul>
+		<!-- Pills navs -->
 
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="list-group">
-        {% if (user) %}
-        <a href="/user" class="list-group-item list-group-item-action active" aria-current="true">
-          歡迎 {{user}} 登入
-        </a>
-        <a href="/user/recharge" class="list-group-item list-group-item-action">儲值</a>
-        <a href="#" class="list-group-item list-group-item-action">金額紀錄</a>
-        <a href="/user/logout" class="list-group-item list-group-item-action">登出</a>
-        {% else %}
-        <a href="/user/login" class="list-group-item list-group-item-action">登入</a>
-        <a href="/user/register" class="list-group-item list-group-item-action">註冊</a>
-        {% endif %}
-      </div>
-    </div>
-    <div class="col-sm-9">
-      功能內頁
-    </div>
-  </div>
+		<!-- Pills content -->
+		<div class="tab-content">
+			<div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+				<form>
+					<!-- Account input -->
+					<div class="form-outline mb-4">
+						<label class="form-label" for="account">Account</label>
+						<input type="text" id="account" name="account" class="form-control"/>
+					</div>
 
+					<!-- Password input -->
+					<div class="form-outline mb-4">
+						<label class="form-label" for="password">Password</label>
+						<input type="password" id="password" name="password" class="form-control"/>
+					</div>
+
+					<!-- Submit button -->
+					<div style="text-align:center">
+						<button type="submit" class="btn btn-primary btn-block mb-4 text-center" id="login">Sign in</button>
+					</div>
+					<div class="alert alert-danger" role="alert" style="visibility:hidden" id="warning">
+						帳號或密碼錯誤
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div id="register-page">
+		<h1>註冊</h1>
+		<!-- Pills navs href="#pills-login"-->
+		<ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+			<li class="nav-item" role="presentation">
+				<a class="nav-link tab-login" data-mdb-toggle="pill" role="tab" aria-controls="pills-login" aria-selected="true">Login</a>
+			</li>
+			<li class="nav-item" role="presentation">
+				<a class="nav-link active tab-register" data-mdb-toggle="pill" role="tab" aria-controls="pills-register" aria-selected="false">Register</a>
+			</li>
+		</ul>
+
+		<div class="tab-content">
+			<div class="tab-pane fade show active" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
+				<form>
+					<!-- Name input -->
+					<div class="form-outline mb-4">
+						<label class="form-label" for="name">Name</label>
+						<input type="text" id="name" name="name" class="form-control"/>
+					</div>
+
+					<!-- Email input -->
+					<div class="form-outline mb-4">
+						<label class="form-label" for="register-account">Account</label>
+						<input type="text" id="register-account" name="register-account" class="form-control"/>
+					</div>
+
+					<!-- Password input -->
+					<div class="form-outline mb-4">
+						<label class="form-label" for="register-password">Password</label>
+						<input type="password" id="register-password" name="register-password" class="form-control"/>
+					</div>
+
+					<!-- Submit button -->
+					<div style="text-align:center">
+						<button type="submit" class="btn btn-primary btn-block mb-3" id="register">Register</button>
+					</div>
+					<div class="alert alert-danger" role="alert" style="visibility:hidden" id="warning">
+						註冊失敗，請重新輸入
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+<script src="/javascripts/switch-users-page.js"></script>	
+<script src="/javascripts/register.js"></script>
+<script src="/javascripts/auth.js"></script>
 {% endblock %}

@@ -9,8 +9,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 // backend routes
-var usersApiRouter = require('./routes/api/users');
 var authApiRouter = require('./routes/api/auth');
+var usersApiRouter = require('./routes/api/users');
 
 var app = express();
 require('dotenv').config();
@@ -22,7 +22,7 @@ app.set('view engine', 'twig');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(process.env['COOKIE_KEY']));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // frontend routes
@@ -30,8 +30,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // backend routes
-app.use('/api/users', usersApiRouter);
 app.use('/api/auth', authApiRouter);
+app.use('/api/users', usersApiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

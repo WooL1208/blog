@@ -1,52 +1,36 @@
-var express = require('express');
-var { promisePool: mysql } = require('../../lib/mysql');
+var express = require("express");
+require('dotenv').config();
+var { login } = require('../../app/view-model/auth');
 var router = express.Router();
 
-
 /* 
-  登入 
-  post /auth 
+    登入 
+    post /api/auth
 */
 router.post('/', async function (req, res, next) {
-  const { username, password } = req.body;
-
-  const [rows, fields] = await mysql.execute('SELECT * FROM `user` WHERE username = ?', [username]);
-
-  if (rows.length != 1) {
-    return res.json({
-      'status': false,
-      'message': '帳號或密碼錯誤',
-    })
-  }
-
-  const user = rows[0];
-
-  if (!await argon2.verify(user.password, password)) {
-    return res.json({
-      'status': false,
-      'message': '帳號或密碼錯誤',
-    })
-  }
-
-  res.cookie('user', user.name, { signed: true });
-  res.cookie('userId', user.id, {signed: true});
-
-  return res.json({
-    'status': true,
-    'message': '成功',
-  })
+    const { account, password } = req.body;
+    const token = await login(account, password);
+    if (token) {
+        res.cookie("token", token, { signed: true });
+        return res.json({ status: true, message: "登入成功" })
+    }
+    else {
+        return res.json({ status: false, message: "登入失敗" })
+    }
 });
 
 /* 
-  登出 
-  delete /auth 
+    登出 
+    delete /api/auth
 */
-router.get('/logout', function (req, res, next) {
-  res.clearCookie('user');
-  return res.json({
-    'status': true,
-    'message': '成功',
-  })
+router.delete("/", function (req, res, next) {
+    try {
+        res.clearCookie("token");
+        return res.json({ status: true, message: "登出成功" });
+    } catch (err) {
+        return res.json({ status: false, message: "登出失敗" });
+    }
+
 });
 
 module.exports = router;
