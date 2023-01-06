@@ -1,11 +1,13 @@
 ﻿var { promisePool: mysql } = require('../../lib/mysql');
 
-async function get_account(account) {
+// 取得帳號資料
+async function getAccount(account) {
     const [rows, fields] = await mysql.execute('SELECT * FROM `user` WHERE account = ?', [account]);
     return rows;
 }
 
-async function register_account(name, account, hashedPassword) {
+// 註冊帳號
+async function registerAccount(name, account, hashedPassword) {
     try {
         const [rows, fields] = await mysql.execute('INSERT INTO `user` (is_admin, name, account, password) VALUES (0, ?, ?, ?)', [name, account, hashedPassword]);
         return true;
@@ -17,4 +19,4 @@ async function register_account(name, account, hashedPassword) {
 }
 
 
-module.exports = { get_account, register_account };
+module.exports = { getAccount, registerAccount };
