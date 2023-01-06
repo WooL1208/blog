@@ -11,8 +11,8 @@ DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article` (
   `user_id` int NOT NULL,
   `id` int NOT NULL AUTO_INCREMENT,
-  `category` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `create_time` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -20,15 +20,13 @@ CREATE TABLE `article` (
   CONSTRAINT `article_ibfk_4` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `article` (`user_id`, `id`, `category`, `title`, `content`, `create_time`) VALUES
-(2,	1,	'',	'test',	'test',	'2022-12-30 08:24:51');
 
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `user_id` int NOT NULL,
   `article_id` int NOT NULL,
   `id` int NOT NULL AUTO_INCREMENT,
-  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `create_time` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
@@ -43,14 +41,14 @@ CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `is_admin` int NOT NULL COMMENT '0 : normal, 1 : admin',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `account` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `account` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `user` (`id`, `is_admin`, `name`, `account`, `password`) VALUES
-(1,	1,	'admin',	'admin',	'admin'),
-(2,	0,	'user',	'user',	'user'),
-(3,	1,	'zuki',	'zuki',	'zuki');
+(1,	1,	'admin',	'admin',	'$argon2id$v=19$m=65536,t=3,p=4$0nWavXrR1Ctylrdc4d8nAQ$ktmzd72yq4alwBkH5RBmVFAMMfo18v14OSHCydhgpr8'),
+(2,	0,	'user',	'user',	'$argon2id$v=19$m=65536,t=3,p=4$P6epmMzHkX11msEgSAQD0A$s4J70SeXAIv33eCu8HIG0xcjX5wsEy0298sUsEayUNY'),
+(3,	0,	'test',	'test',	'$argon2id$v=19$m=65536,t=3,p=4$6KilGe3Vx6NOM6qJP4l27w$Ci+VEOVI4N7cKuGVPGiOTbP2U2b86kr2KWqvv0hDI4k');
 
--- 2023-01-04 06:50:23
+-- 2023-01-06 12:23:14
