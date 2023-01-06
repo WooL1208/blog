@@ -1,6 +1,25 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-  <h1>{{title}}</h1>
-  <p>Welcome to {{title}}</p>
+  <div class="btn-group">
+    <a href="#" class="btn btn-outline-primary active" aria-current="page">全部文章</a>
+    <a href="#" class="btn btn-outline-primary">生活</a>
+    <a href="#" class="btn btn-outline-primary">科技</a>
+    <a href="#" class="btn btn-outline-primary">美食</a>
+    <a href="#" class="btn btn-outline-primary">理財</a>
+  </div>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for post in posts %}
+      <div class="col">
+        <div class="card">
+          <img src="{{ post.image }}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <a href="#">
+              <h1 class="card-title">{{ post.title }}</h1>
+            </a>
+            <p class="card-text">{{ post.content }}</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
 {% endblock %}
