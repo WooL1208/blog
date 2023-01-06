@@ -1,8 +1,8 @@
-const login = async (event) => {
+const register = async (event) => {
     event.preventDefault()
     const name = document.getElementById('name').value;
-    const account = document.getElementById('account').value;
-    const password = document.getElementById('password').value;
+    const account = document.getElementById('register-account').value;
+    const password = document.getElementById('register-password').value;
 
     const response = await fetch('/api/users', {
         method: 'POST',
@@ -21,4 +21,4 @@ const login = async (event) => {
     }
 };
 
-document.getElementById('register').addEventListener('click', login);
+document.getElementById('register').addEventListener('click', register);
