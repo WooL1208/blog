@@ -18,4 +18,4 @@ document.getElementsByClassName('tab-login')[1].addEventListener('click', loginP
 document.getElementsByClassName('tab-register')[1].addEventListener('click', registerPage);
 document.addEventListener("DOMContentLoaded", function () {
     loginPage();
-  });
+});
