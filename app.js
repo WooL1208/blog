@@ -8,6 +8,7 @@ var { checkIsAdmin } = require('./app/view-model/auth');
 // frontend routes
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var backstageRouter = require('./routes/backstage');
 
 // backend routes
 var authApiRouter = require('./routes/api/auth');
@@ -32,6 +33,7 @@ app.use(checkIsAdmin);
 // frontend routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/backstage', backstageRouter);
 
 // backend routes
 app.use('/api/auth', authApiRouter);

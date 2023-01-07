@@ -2,9 +2,9 @@ var express = require("express");
 var router = express.Router();
 require('dotenv').config();
 
-// 登入頁面
+// 後台主頁
 router.get("/", function (req, res, next) {
-  res.render("users/index", { title: 'Login'});
+  res.render("backstage/index", { title: 'Backstage'});
 });
 
 module.exports = router;
