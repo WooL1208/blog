@@ -1,13 +1,20 @@
 ﻿require('dotenv').config();
-var { getUserDb, deleteUserDb } = require('../model/member');
+var { getUsersDb, getSingleUserDb, deleteUserDb, editUserDb } = require('../model/member');
 
 /**
  * 取得所有使用者資訊
  * @returns {object} 使用者資訊
  */
-async function getUser() {
-    const users = await getUserDb();
+async function getUsers() {
+    const users = await getUsersDb();
+    console.log({'getUsers': users});
     return users;
+}
+
+async function getSingleUser(id) {
+    const user = await getSingleUserDb(id);
+    console.log({'getSingleUser': user});
+    return user;
 }
 
 /**
@@ -20,4 +27,9 @@ async function deleteUser(id) {
     return ret;
 }
 
-module.exports = { getUser, deleteUser };
+async function editUser(id, identity, member) {
+    const ret = editUserDb(id, identity, member);
+    return ret;
+}
+
+module.exports = { getUsers, getSingleUser, deleteUser, editUser };

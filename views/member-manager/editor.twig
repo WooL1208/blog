@@ -1,0 +1,28 @@
+﻿{% extends 'layout.twig' %}
+
+{% block body %}
+	<h1>{{title}}</h1>
+
+	<form>
+		<select class="form-select" aria-label="identity" id="identity">
+			<option selected disabled value="">請選擇身份</option>
+			<option value="0">會員</option>
+			<option value="1">管理員</option>
+		</select>
+		<div class="mb-3">
+			<label for="edit-name" class="form-label">名稱</label>
+			<input type="text" class="form-control" id="edit-name"></input>
+		</div>
+
+		<div style="text-align:left">
+			<button type="submit" class="btn btn-primary btn-block mb-3" id="edit-member">修改</button>
+			<button type="button" class="btn btn-secondary btn-block mb-3" onclick="location.href='/member-manager'">返回</button>
+		</div>
+
+		<div class="alert alert-danger" role="alert" style="visibility:hidden" id="member-warning">
+			請確認是否有未填寫的欄位
+		</div>
+	</form>
+
+	<script src="/javascripts/member-editor.js"></script>
+{% endblock body %}
