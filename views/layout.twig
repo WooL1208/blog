@@ -26,11 +26,18 @@
 							</li>
 						{% endif %}
 						{% if admin %}
-							<li>
-								<a class="nav-link" href="/backstage/">後台管理</a>
-							</li>
-							<li>
-								<a class="nav-link" href="/article-manager/">文章管理</a>
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									後台管理
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<a class="dropdown-item" href="/member-manager/">會員管理</a>
+									</li>
+									<li>
+										<a class="dropdown-item" href="/article-manager/">文章管理</a>
+									</li>
+								</ul>
 							</li>
 						{% endif %}
 					</ul>
