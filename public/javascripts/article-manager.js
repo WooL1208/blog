@@ -38,7 +38,7 @@ const reloadArticlesList = async() => {
             <td>${response[i].title}</td>
             <td>${response[i].category}</td>
             <td>${response[i].name}(${response[i].account})</td>
-            <td>${(response[i].create_time)}</td>
+            <td>${(response[i].createAt)}</td>
             <td>
                 <a href="/article-manager/editor?mode=edit&id=${response[i].id}" class="btn btn-primary">編輯</a>
                 <button type="button" class="btn btn-danger" onclick="deleteArticle(${response[i].id})">刪除</button>

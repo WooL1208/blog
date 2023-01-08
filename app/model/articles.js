@@ -5,7 +5,7 @@
  * @returns {object} 文章資料
  */
 async function getArticlesDb() {
-    const [rows, fields] = await mysql.execute('SELECT article.id, title, category, user_id, user.name, user.account, content, create_time FROM `article` INNER JOIN `user` ON article.user_id = user.id');
+    const [rows, fields] = await mysql.execute('SELECT articles.id, title, category, user_id, users.name, users.account, content, createdAt FROM `articles` INNER JOIN `users` ON articles.user_id = users.id');
     return rows;
 }
 
@@ -16,7 +16,7 @@ async function getArticlesDb() {
  * @returns {object} 文章資料
  */
 async function getSingleArticleDb(id) {
-    const [rows, fields] = await mysql.execute('SELECT article.id, title, category, user_id, user.name, user.account, content, create_time FROM `article` INNER JOIN `user` ON article.user_id = user.id WHERE article.id = ?', [id]);
+    const [rows, fields] = await mysql.execute('SELECT articles.id, title, category, user_id, users.name, users.account, content, createdAt FROM `articles` INNER JOIN `users` ON articles.user_id = users.id WHERE articles.id = ?', [id]);
     return rows[0];
 }
 
@@ -29,7 +29,7 @@ async function getSingleArticleDb(id) {
  * @returns {boolean} 是否新增成功
  */
 async function addArticleDb(title, category, userId, content) {
-    const [rows, fields] = await mysql.execute('INSERT INTO `article` (title, category, user_id, content, create_time) VALUES (?, ?, ?, ?, now())', [title, category, userId, content]);
+    const [rows, fields] = await mysql.execute('INSERT INTO `articles` (title, category, user_id, content, createdAt) VALUES (?, ?, ?, ?, now())', [title, category, userId, content]);
     if (rows.affectedRows === 0) {
         return false;
     } else {
@@ -46,7 +46,7 @@ async function addArticleDb(title, category, userId, content) {
  * @returns {boolean} 是否修改成功
  */
 async function editArticleDb(id, title, category, content) {
-    const [rows, fields] = await mysql.execute('UPDATE `article` SET title = ?, category = ?, content = ? WHERE id = ?', [title, category, content, id]);
+    const [rows, fields] = await mysql.execute('UPDATE `articles` SET title = ?, category = ?, content = ? WHERE id = ?', [title, category, content, id]);
     if (rows.affectedRows === 0) {
         return false;
     } else {
@@ -60,7 +60,7 @@ async function editArticleDb(id, title, category, content) {
  * @returns {boolean} 是否刪除成功
  */
 async function deleteArticleDb(id) {
-    const [rows, fields] = await mysql.execute('DELETE FROM `article` WHERE id = ?', [id]);
+    const [rows, fields] = await mysql.execute('DELETE FROM `articles` WHERE id = ?', [id]);
     if (rows.affectedRows === 0) {
         return false;
     } else {

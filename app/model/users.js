@@ -6,7 +6,7 @@
  * @returns {object} 帳號資訊
  */
 async function getAccount(account) {
-    const [rows, fields] = await mysql.execute('SELECT * FROM `user` WHERE account = ?', [account]);
+    const [rows, fields] = await mysql.execute('SELECT * FROM `users` WHERE account = ?', [account]);
     return rows;
 }
 
@@ -18,7 +18,7 @@ async function getAccount(account) {
  */
 async function registerAccount(name, account, hashedPassword) {
     try {
-        const [rows, fields] = await mysql.execute('INSERT INTO `user` (is_admin, name, account, password) VALUES (0, ?, ?, ?)', [name, account, hashedPassword]);
+        const [rows, fields] = await mysql.execute('INSERT INTO `users` (is_admin, name, account, password) VALUES (0, ?, ?, ?)', [name, account, hashedPassword]);
         return true;
     }
     catch (err) {
