@@ -27,5 +27,4 @@ async function registerAccount(name, account, hashedPassword) {
     }
 }
 
-
 module.exports = { getAccount, registerAccount };
