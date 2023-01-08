@@ -8,13 +8,16 @@
 			<label for="title" class="form-label">標題</label>
 			<input type="text" class="form-control" id="title">
 		</div>
-		<select class="form-select" aria-label="category" id="category">
-			<option selected disabled value="">請選擇文章類別</option>
-			<option value="生活">生活</option>
-			<option value="科技">科技</option>
-			<option value="美食">美食</option>
-			<option value="理財">理財</option>
-		</select>
+		<div class="mb-3">
+			<label for="category" class="form-label">類別</label>
+			<select class="form-select" aria-label="category" id="category">
+				<option selected disabled value="">請選擇文章類別</option>
+				<option value="生活">生活</option>
+				<option value="科技">科技</option>
+				<option value="美食">美食</option>
+				<option value="理財">理財</option>
+			</select>
+		</div>
 		<div class="mb-3">
 			<label for="content" class="form-label">內容</label>
 			<textarea class="form-control" id="content" rows="3"></textarea>
