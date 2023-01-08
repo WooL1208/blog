@@ -20,15 +20,14 @@
 			<textarea class="form-control" id="content" rows="3"></textarea>
 		</div>
 
-		{% if mode == 'add' %}
-			<div style="text-align:left">
-				<button type="submit" class="btn btn-primary btn-block mb-3" id="add-article">新增</button>
-			</div>
-		{% elseif mode == 'edit' %}
-			<div style="text-align:left">
-				<button type="submit" class="btn btn-primary btn-block mb-3" id="edit-article">修改</button>
-			</div>
-		{% endif %}
+		<div style="text-align:left">
+			<button type="submit" class="btn btn-primary btn-block mb-3" id="add-article">新增</button>
+		</div>
+
+		<div style="text-align:left">
+			<button type="submit" class="btn btn-primary btn-block mb-3" id="edit-article">修改</button>
+		</div>
+
 		<div class="alert alert-danger" role="alert" style="visibility:hidden" id="warning">
 			請確認是否有未填寫的欄位
 		</div>

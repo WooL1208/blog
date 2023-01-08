@@ -1,6 +1,6 @@
 var express = require("express");
 require('dotenv').config();
-var { getArticles, addArticle, deleteArticle } = require('../../app/view-model/articles');
+var { getArticles, getSingleArticle, addArticle, editArticle, deleteArticle } = require('../../app/view-model/articles');
 var router = express.Router();
 
 /* 
@@ -8,8 +8,14 @@ var router = express.Router();
     get /api/articles
 */
 router.get('/', async function (req, res, next) {
-    const articles = await getArticles();
-    return res.json(articles)
+    const { id } = req.query;
+    if (id) {
+        const article = await getSingleArticle(id);
+        return res.json(article);
+    } else {
+        const articles = await getArticles();
+        return res.json(articles)
+    }
 });
 
 
@@ -30,6 +36,22 @@ router.post("/", async function (req, res, next) {
 
 });
 
+/*
+    修改文章
+    put /api/articles
+*/
+router.put("/", async function (req, res, next) {
+    const { id, title, category, content } = req.body;
+    console.log(id, title, category, content);
+
+    const ret = await editArticle(id, title, category, content);
+    if (ret) {
+        return res.json({ status: true, message: "修改成功" });
+    } else {
+        return res.json({ status: false, message: "修改失敗" });
+    }
+});
+
 /* 
     刪除文章 
     delete /api/articles
@@ -44,25 +66,6 @@ router.delete("/", async function (req, res, next) {
     }
 
 });
-
-
-
-/* 
-    取得文章
-    get /api/articles
-*/
-// router.post('/', async function (req, res, next) {
-//     const { account, password } = req.body;
-//     const token = await login(account, password);
-//     if (token) {
-//         res.cookie("token", token, { signed: true });
-//         return res.json({ status: true, message: "登入成功" })
-//     }
-//     else {
-//         return res.json({ status: false, message: "登入失敗" })
-//     }
-// });
-
 
 
 module.exports = router;

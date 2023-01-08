@@ -16,14 +16,12 @@ router.get("/", function (req, res, next) {
   get /article-manager/editor
   query:
     mode: add => 新增文章
-    mode: edit => 編輯文章
-    id: => 文章id
+          edit => 編輯文章
+    id: 0 => 文章id
 */
 router.get("/editor", function (req, res, next) {
-  const { mode, id } = req.query;
-  console.log(mode);
-  console.log(id);
-  res.render("article-manager/editor", { title: '文章編輯器', mode });
+  const { token } = req.signedCookies;
+  res.render("article-manager/editor", { title: '文章編輯器', token });
 });
 
 module.exports = router;
