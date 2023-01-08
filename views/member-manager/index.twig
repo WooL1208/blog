@@ -3,7 +3,24 @@
 {% block body %}
   <h1>{{title}}</h1>
   <p>Welcome to {{title}}</p>
+
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Admin</th>
+        <th scope="col">Name</th>
+        <th scope="col">Account</th>
+      </tr>
+    </thead>
+    <tbody id="member-list">
+      {# <div id="member-list"></div> #}
+    </tbody>
+  </table>
+
   <div style="text-align:center">
     <button type="submit" class="btn btn-primary btn-block mb-3" onclick="location.href='/'">返回</button>
   </div>
+
+  <script src="/javascripts/member-manager.js"></script>
 {% endblock %}
