@@ -1,3 +1,8 @@
+/**
+ * 登入
+ * @param {*} event 
+ */
+
 const login = async (event) => {
     event.preventDefault()
     const account = document.getElementById('account').value;

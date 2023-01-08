@@ -1,3 +1,7 @@
+/* 
+    刪除文章
+    @param id 文章id
+*/
 const deleteArticle = async (id) => {
     const response = await fetch(`/api/articles`, {
         method: 'DELETE',
@@ -15,7 +19,9 @@ const deleteArticle = async (id) => {
     }
 }
 
-
+/*
+    重新載入文章列表
+*/
 const reloadArticlesList = async() => {
     const response = await fetch('/api/articles', {
         method: 'GET'

@@ -3,12 +3,21 @@ var { getAccount } = require('../model/users');
 const jwt = require('jsonwebtoken');
 var argon2 = require('argon2');
 
-// 產生 token
+/**
+ * 產生 token
+ * @param {string} account 帳號
+ * @returns {string} token
+ */
 async function generateAccessToken(account) {
     return jwt.sign({ 'account': account }, process.env.TOKEN_SECRET, { expiresIn: '7d' });
 }
 
-// 驗證 token
+
+/**
+ * 驗證 token
+ * @param {string} token token
+ * @returns {object} 驗證結果
+ */
 async function verifyToken(token) {
     try {
         const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
@@ -18,7 +27,12 @@ async function verifyToken(token) {
     }
 }
 
-// 登入
+/**
+ * 登入
+ * @param {string} account 帳號
+ * @param {string} password 密碼
+ * @returns {string, boolean} 登入成功回傳token，失敗回傳false
+ */
 async function login(account, password) {
     // 取得符合的帳戶資料
     const retAccount = await getAccount(account);
@@ -38,7 +52,13 @@ async function login(account, password) {
     return token;
 }
 
-// 檢查是否為管理員
+
+/**
+ * 檢查是否為管理員(middleware)
+ * @param {object} req request
+ * @param {object} res response
+ * @param {function} next next
+ */
 async function checkIsAdmin(req, res, next) {
     const token = req.signedCookies.token;
     const decoded = await verifyToken(token);
