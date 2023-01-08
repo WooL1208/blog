@@ -1,6 +1,6 @@
 var express = require("express");
 require('dotenv').config();
-var { getArticles, deleteArticle } = require('../../app/view-model/articles');
+var { getArticles, addArticle, deleteArticle } = require('../../app/view-model/articles');
 var router = express.Router();
 
 /* 
@@ -12,6 +12,24 @@ router.get('/', async function (req, res, next) {
     return res.json(articles)
 });
 
+
+/* 
+    新增文章 
+    delete /api/articles
+*/
+router.post("/", async function (req, res, next) {
+    const { title, category, content } = req.body;
+
+    console.log(title, category, content, req.userId);
+    const ret = await addArticle(title, category, req.userId, content);
+    if (ret) {
+        return res.json({ status: true, message: "新增成功" });
+    } else {
+        return res.json({ status: false, message: "新增失敗" });
+    }
+
+});
+
 /* 
     刪除文章 
     delete /api/articles
@@ -21,10 +39,10 @@ router.delete("/", async function (req, res, next) {
     const ret = await deleteArticle(id);
     if (ret) {
         return res.json({ status: true, message: "刪除成功" });
-    }else{
+    } else {
         return res.json({ status: false, message: "刪除失敗" });
     }
-    
+
 });
 
 

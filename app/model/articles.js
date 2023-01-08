@@ -5,13 +5,18 @@ async function getArticlesDb() {
     return rows;
 }
 
+async function addArticleDb(title, category, userId, content) {
+    const [rows, fields] = await mysql.execute('INSERT INTO `article` (title, category, user_id, content, create_time) VALUES (?, ?, ?, ?, now())', [title, category, userId, content]);
+    return rows;
+}
+
 async function deleteArticleDb(id) {
     const [rows, fields] = await mysql.execute('DELETE FROM `article` WHERE id = ?', [id]);
     if (rows.affectedRows === 0) {
         return false;
-    }else{
+    } else {
         return true;
     }
 }
 
-module.exports = { getArticlesDb , deleteArticleDb};
+module.exports = { getArticlesDb, addArticleDb, deleteArticleDb };

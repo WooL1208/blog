@@ -2,6 +2,37 @@
 
 {% block body %}
 	<h1>{{title}}</h1>
-	
+
+	<form>
+		<div class="mb-3">
+			<label for="title" class="form-label">標題</label>
+			<input type="text" class="form-control" id="title">
+		</div>
+		<select class="form-select" aria-label="category" id="category">
+			<option selected disabled value="">請選擇文章類別</option>
+			<option value="生活">生活</option>
+			<option value="科技">科技</option>
+			<option value="美食">美食</option>
+			<option value="理財">理財</option>
+		</select>
+		<div class="mb-3">
+			<label for="content" class="form-label">內容</label>
+			<textarea class="form-control" id="content" rows="3"></textarea>
+		</div>
+
+		{% if mode == 'add' %}
+			<div style="text-align:left">
+				<button type="submit" class="btn btn-primary btn-block mb-3" id="add-article">新增</button>
+			</div>
+		{% elseif mode == 'edit' %}
+			<div style="text-align:left">
+				<button type="submit" class="btn btn-primary btn-block mb-3" id="edit-article">修改</button>
+			</div>
+		{% endif %}
+		<div class="alert alert-danger" role="alert" style="visibility:hidden" id="warning">
+			請確認是否有未填寫的欄位
+		</div>
+	</form>
+
 	<script src="/javascripts/editor.js"></script>
 {% endblock body %}

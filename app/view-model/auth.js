@@ -45,6 +45,7 @@ async function checkIsAdmin(req, res, next) {
     if (decoded) {
         const retAccount = await getAccount(decoded.account);
         req.isAdmin = Boolean(retAccount[0].is_admin);
+        req.userId = retAccount[0].id;
     }
     else {
         req.isAdmin = false;
