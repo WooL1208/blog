@@ -10,4 +10,10 @@ router.get('/', function(req, res, next) {
   
 });
 
+// 警告頁面
+router.get('/warning', function(req, res, next) {
+  res.render('warning');
+  
+});
+
 module.exports = router;

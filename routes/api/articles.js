@@ -26,7 +26,10 @@ router.get('/', async function (req, res, next) {
 router.post("/", async function (req, res, next) {
     const { title, category, content } = req.body;
 
-    console.log(title, category, content, req.userId);
+    if(req.isAdmin === false) {
+        return res.json({ status: false, message: "新增失敗" });
+    }
+    
     const ret = await addArticle(title, category, req.userId, content);
     if (ret) {
         return res.json({ status: true, message: "新增成功" });
@@ -42,7 +45,10 @@ router.post("/", async function (req, res, next) {
 */
 router.put("/", async function (req, res, next) {
     const { id, title, category, content } = req.body;
-    console.log(id, title, category, content);
+    
+    if(req.isAdmin === false) {
+        return res.json({ status: false, message: "修改失敗" });
+    }
 
     const ret = await editArticle(id, title, category, content);
     if (ret) {
@@ -58,6 +64,11 @@ router.put("/", async function (req, res, next) {
 */
 router.delete("/", async function (req, res, next) {
     const { id } = req.body;
+
+    if(req.isAdmin === false) {
+        return res.json({ status: false, message: "刪除失敗" });
+    }
+
     const ret = await deleteArticle(id);
     if (ret) {
         return res.json({ status: true, message: "刪除成功" });
