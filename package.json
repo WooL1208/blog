@@ -15,10 +15,6 @@
     "jsonwebtoken": "^9.0.0",
     "morgan": "~1.9.1",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.28.0",
     "twig": "~0.10.3"
-  },
-  "devDependencies": {
-    "sequelize-cli": "^6.5.2"
   }
 }
