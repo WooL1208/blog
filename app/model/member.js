@@ -5,4 +5,13 @@ async function getUserDb() {
     return rows;
 }
 
-module.exports = { getUserDb };
+async function deleteUserDb(id) {
+    const [rows, fields] = await mysql.execute('DELETE FROM `user` WHERE id = ?', [id]);
+    if (rows.affectedRows === 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+module.exports = { getUserDb, deleteUserDb };

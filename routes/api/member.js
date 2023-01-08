@@ -1,6 +1,6 @@
 var express = require("express");
 require('dotenv').config();
-var { getUser} = require('../../app/view-model/member');
+var { getUser, deleteUser} = require('../../app/view-model/member');
 var router = express.Router();
 
 /* 
@@ -16,16 +16,16 @@ router.get('/', async function (req, res, next) {
     刪除會員
     delete /api/member
 */
-// router.delete("/", async function (req, res, next) {
-//     const { id } = req.body;
-//     const ret = await deleteArticle(id);
-//     if (ret) {
-//         return res.json({ status: true, message: "刪除成功" });
-//     }else{
-//         return res.json({ status: false, message: "刪除失敗" });
-//     }
+router.delete("/", async function (req, res, next) {
+    const { id } = req.body;
+    const ret = await deleteUser(id);
+    if (ret) {
+        return res.json({ status: true, message: "刪除成功" });
+    }else{
+        return res.json({ status: false, message: "刪除失敗" });
+    }
     
-// });
+});
 
 
 
