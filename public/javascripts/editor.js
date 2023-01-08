@@ -69,6 +69,11 @@ const editArticle = async (event) => {
 
 }
 
+function auto_grow(element) {
+    element.style.height = "5px";
+    element.style.height = (element.scrollHeight)+"px";
+}
+
 
 
 if (params.mode == 'add') {
