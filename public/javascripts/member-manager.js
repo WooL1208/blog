@@ -1,3 +1,20 @@
+const deleteMember = async (id) => {
+    const response = await fetch(`/api/member`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id
+        })
+    }).then(async (res) => {
+        return await res.json();
+    });
+    if (response.status) {
+        reloadMemberData();
+    }
+}
+
 const reloadMemberData = async () => {
     const memberResponse = await fetch('/api/member', {
         method: 'GET'

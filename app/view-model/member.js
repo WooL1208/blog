@@ -1,9 +1,14 @@
 ﻿require('dotenv').config();
-var { getUserDb } = require('../model/member');
+var { getUserDb, deleteUserDb } = require('../model/member');
 
 async function getUser() {
     const users = await getUserDb();
     return users;
 }
 
-module.exports = { getUser };
+async function deleteUser(id) {
+    const ret = deleteUserDb(id)
+    return ret;
+}
+
+module.exports = { getUser, deleteUser };
