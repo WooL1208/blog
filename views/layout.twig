@@ -7,7 +7,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 	</head>
 	<body>
-		<nav class="navbar navbar-expand-lg bg-light">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark" data-bs-theme="dark">
 			<div class="container-fluid container">
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -45,7 +45,7 @@
 					{% if (title) == 'Blog' %}
 					<form class="d-flex" role="search">
 						<input class="form-control me-2" type="search" placeholder="文章標題" aria-label="Search" id="title" name="title">
-						<button class="btn btn-outline-success" type="submit">Search</button>
+						<button class="btn btn-outline-light" type="submit">Search</button>
 					</form>
 					{% endif %}
 				</div>
