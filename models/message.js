@@ -20,9 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   message.init({
+    id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER,
     article_id: DataTypes.INTEGER,
-    id: DataTypes.INTEGER,
     content: DataTypes.STRING,
   }, {
     sequelize,

@@ -20,8 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   article.init({
-    user_id: DataTypes.INTEGER,
     id: DataTypes.INTEGER,
+    user_id: DataTypes.INTEGER,
     category: DataTypes.STRING,
     title: DataTypes.STRING,
     content: DataTypes.STRING,
