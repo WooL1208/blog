@@ -2,9 +2,6 @@
 
 {% block body %}
 	<h1>{{title}}</h1>
-	<div style="text-align:left">
-		<a href="/article-manager/editor?mode=add" class="btn btn-primary btn-block mb-3">新增文章</a>
-	</div>
 	<table class="table" style="table-layout: fixed; word-wrap: break-word;">
 		<thead class="table-dark">
 			<tr>
@@ -20,7 +17,8 @@
 	</table>
 
 	<div style="text-align:center">
-		<button type="submit" class="btn btn-primary btn-block mb-3" onclick="location.href='/'">返回</button>
+		<button type="button" class="btn btn-primary btn-block mb-3" onclick="location.href='/article-manager/editor?mode=add'">新增文章</button>
+		<button type="button" class="btn btn-secondary btn-block mb-3" onclick="location.href='/'">返回</button>
 	</div>
 	<script src="/javascripts/article-manager.js"></script>
 {% endblock body %}
