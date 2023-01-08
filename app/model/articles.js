@@ -5,7 +5,7 @@
  * @returns {object} 文章資料
  */
 async function getArticlesDb() {
-    const [rows, fields] = await mysql.execute('SELECT articles.id, title, category, user_id, users.name, users.account, content, createdAt FROM `articles` INNER JOIN `users` ON articles.user_id = users.id');
+    const [rows, fields] = await mysql.execute('SELECT articles.id, title, category, user_id, users.name, users.account, content, articles.createdAt FROM `articles` INNER JOIN `users` ON articles.user_id = users.id');
     return rows;
 }
 
@@ -16,7 +16,7 @@ async function getArticlesDb() {
  * @returns {object} 文章資料
  */
 async function getSingleArticleDb(id) {
-    const [rows, fields] = await mysql.execute('SELECT articles.id, title, category, user_id, users.name, users.account, content, createdAt FROM `articles` INNER JOIN `users` ON articles.user_id = users.id WHERE articles.id = ?', [id]);
+    const [rows, fields] = await mysql.execute('SELECT articles.id, title, category, user_id, users.name, users.account, content, articles.createdAt FROM `articles` INNER JOIN `users` ON articles.user_id = users.id WHERE articles.id = ?', [id]);
     return rows[0];
 }
 
