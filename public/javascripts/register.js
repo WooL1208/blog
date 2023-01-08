@@ -4,6 +4,11 @@ const register = async (event) => {
     const account = document.getElementById('register-account').value;
     const password = document.getElementById('register-password').value;
 
+    if (name === '' || account === '' || password === '') {
+        document.getElementById('register-warning').style.visibility = "visible";
+        return;
+    }
+
     const response = await fetch('/api/users', {
         method: 'POST',
         body: JSON.stringify({ name, account, password }),
@@ -17,7 +22,7 @@ const register = async (event) => {
     if (response.status) {
         location = '/';
     } else {
-        document.getElementById('warning').style.visibility = "visible";
+        document.getElementById('register-warning').style.visibility = "visible";
     }
 };
 

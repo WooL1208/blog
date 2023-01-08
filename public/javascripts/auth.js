@@ -8,6 +8,11 @@ const login = async (event) => {
     const account = document.getElementById('account').value;
     const password = document.getElementById('password').value;
 
+    if (account === '' || password === '') {
+        document.getElementById('login-warning').style.visibility = "visible";
+        return;
+    }
+
     const response = await fetch('/api/auth', {
         method: 'POST',
         body: JSON.stringify({ account, password }),
@@ -21,7 +26,7 @@ const login = async (event) => {
     if (response.status) {
         location = '/';
     } else {
-        document.getElementById('warning').style.visibility = "visible";
+        document.getElementById('login-warning').style.visibility = "visible";
     }
 };
 
