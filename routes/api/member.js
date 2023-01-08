@@ -1,6 +1,6 @@
 var express = require("express");
 require('dotenv').config();
-var { getUser, deleteUser} = require('../../app/view-model/member');
+var { getUsers, getSingleUser, deleteUser, editUser} = require('../../app/view-model/member');
 var router = express.Router();
 
 /* 
@@ -8,8 +8,17 @@ var router = express.Router();
     get /api/member
 */
 router.get('/', async function (req, res, next) {
-    const users = await getUser();
-    return res.json(users)
+    const { id } = req.query;
+    console.log({'id': id});
+    if (id) {
+        const user = await getSingleUser(id);
+        console.log({'getSingle': user});
+        return res.json(user);
+    } else {
+        const users = await getUsers();
+        console.log({'getUsers': users});
+        return res.json(users)
+    }
 });
 
 /* 
@@ -27,24 +36,19 @@ router.delete("/", async function (req, res, next) {
     
 });
 
+router.put("/", async function (req, res, next) {
+    const { id, identity, member } = req.body;
+    
+    if(req.isAdmin === false) {
+        return res.json({ status: false, message: "修改失敗" });
+    }
 
-
-/* 
-    取得文章
-    get /api/articles
-*/
-// router.post('/', async function (req, res, next) {
-//     const { account, password } = req.body;
-//     const token = await login(account, password);
-//     if (token) {
-//         res.cookie("token", token, { signed: true });
-//         return res.json({ status: true, message: "登入成功" })
-//     }
-//     else {
-//         return res.json({ status: false, message: "登入失敗" })
-//     }
-// });
-
-
+    const ret = await editUser(id, identity, member);
+    if (ret) {
+        return res.json({ status: true, message: "修改成功" });
+    } else {
+        return res.json({ status: false, message: "修改失敗" });
+    }
+});
 
 module.exports = router;

@@ -24,20 +24,20 @@ const reloadMemberData = async () => {
     console.log(memberResponse)
     let memberList = '';
     for (let i = 0; i < memberResponse.length ; i++) {
-        let admin;
+        let identity;
         if (memberResponse[i].is_admin == 1){
-            admin = '管理員';
+            identity = '管理員';
         } else {
-            admin = '會員';
+            identity = '會員';
         }
         memberList += `
         <tr>
             <th scope="row">${memberResponse[i].id}</th>
-            <td>${admin}</td>
+            <td>${identity}</td>
             <td>${memberResponse[i].name}</td>
             <td>${memberResponse[i].account}</td>
             <td>
-                <a href="/articles/${memberResponse[i].id}" class="btn btn-primary">編輯</a>
+                <a href="/member-manager/editor?id=${memberResponse[i].id}" class="btn btn-primary">編輯</a>
                 <button type="button" class="btn btn-danger" onclick="deleteMember(${memberResponse[i].id})">刪除</button>
             </td>
         </tr>`;
