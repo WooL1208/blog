@@ -72,12 +72,12 @@ const editArticle = async (event) => {
 
 
 if (params.mode == 'add') {
-    document.getElementById('add-article').style.display = 'block';
+    document.getElementById('add-article').style.display = 'inline-block';
     document.getElementById('edit-article').style.display = 'none';
 } else if (params.mode == 'edit') {
     setContent();
     document.getElementById('add-article').style.display = 'none';
-    document.getElementById('edit-article').style.display = 'block';
+    document.getElementById('edit-article').style.display = 'inline-block';
 }
 
 

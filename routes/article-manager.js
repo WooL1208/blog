@@ -8,7 +8,7 @@ require('dotenv').config();
  */
 router.get("/", function (req, res, next) {
   const { token } = req.signedCookies;
-  res.render("article-manager/index", { title: '文章管理', token });
+  res.render("article-manager/index", { title: '文章管理', token, admin: req.isAdmin });
 });
 
 
@@ -22,7 +22,7 @@ router.get("/", function (req, res, next) {
  */
 router.get("/editor", function (req, res, next) {
   const { token } = req.signedCookies;
-  res.render("article-manager/editor", { title: '文章編輯器', token });
+  res.render("article-manager/editor", { title: '文章編輯器', token, admin: req.isAdmin });
 });
 
 module.exports = router;
