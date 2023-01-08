@@ -1,6 +1,5 @@
 ﻿const getArticles = async(response) => {
     const checked = await document.querySelector('input[name=btnradio]:checked')
-    console.log('選中的值:', checked.id)
 
     if (checked.id === 'btnradio1') {
         return response
@@ -27,7 +26,6 @@ const reloadArticles = async() => {
     });
 
     const articles = await getArticles(response);
-    console.log('過濾後的資料:', articles)
 
     let articleList = '';
 
