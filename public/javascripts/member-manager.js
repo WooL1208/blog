@@ -1,27 +1,26 @@
 const reloadMemberData = async () => {
-    const response = await fetch('/member-manager/fetch', {
+    const memberResponse = await fetch('/api/member', {
         method: 'GET'
     }).then(async (res) => {
         return await res.json();
     });
 
     let memberList = '';
-
-    for (let i = 0; i < response.data.length ; i++) {
+    for (let i = 0; i < memberResponse.length ; i++) {
         let admin;
-        if (response.data[i].is_admin == 1){
+        if (memberResponse[i].is_admin == 1){
             admin = '管理員';
         } else {
             admin = '會員';
         }
         memberList += `
         <tr>
-            <th scope="row">${response.data[i].id}</th>
+            <th scope="row">${memberResponse[i].id}</th>
             <td>${admin}</td>
-            <td>${response.data[i].name}</td>
-            <td>${response.data[i].account}</td>
+            <td>${memberResponse[i].name}</td>
+            <td>${memberResponse[i].account}</td>
             <td>
-                <a href="/articles/${response.data[i].id}" class="btn btn-primary">編輯</a>
+                <a href="/articles/${memberResponse[i].id}" class="btn btn-primary">編輯</a>
                 <button type="button" class="btn btn-danger" onclick="deleteMember(${response.data[i].id})">刪除</button>
             </td>
         </tr>`;

@@ -24,7 +24,7 @@ const reloadArticlesList = async() => {
     });
 
     let articlesList = '';
-    console.log(response)
+    console.log({'js': response});
     for (let i = 0; i < response.length; i++) {
         articlesList += `
         <tr>
