@@ -4,7 +4,7 @@ const reloadMemberData = async () => {
     }).then(async (res) => {
         return await res.json();
     });
-
+    console.log(memberResponse)
     let memberList = '';
     for (let i = 0; i < memberResponse.length ; i++) {
         let admin;
@@ -21,7 +21,7 @@ const reloadMemberData = async () => {
             <td>${memberResponse[i].account}</td>
             <td>
                 <a href="/articles/${memberResponse[i].id}" class="btn btn-primary">編輯</a>
-                <button type="button" class="btn btn-danger" onclick="deleteMember(${response.data[i].id})">刪除</button>
+                <button type="button" class="btn btn-danger" onclick="deleteMember(${memberResponse[i].id})">刪除</button>
             </td>
         </tr>`;
     }
