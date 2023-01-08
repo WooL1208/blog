@@ -3,7 +3,7 @@ require('dotenv').config();
 var { getArticles, getSingleArticle, addArticle, editArticle, deleteArticle } = require('../../app/view-model/articles');
 var router = express.Router();
 
-/* 
+/*
     取得文章
     get /api/articles
 */
@@ -18,9 +18,8 @@ router.get('/', async function (req, res, next) {
     }
 });
 
-
-/* 
-    新增文章 
+/*
+    新增文章
     delete /api/articles
 */
 router.post("/", async function (req, res, next) {
@@ -29,7 +28,7 @@ router.post("/", async function (req, res, next) {
     if(req.isAdmin === false) {
         return res.json({ status: false, message: "新增失敗" });
     }
-    
+
     const ret = await addArticle(title, category, req.userId, content);
     if (ret) {
         return res.json({ status: true, message: "新增成功" });
@@ -45,7 +44,7 @@ router.post("/", async function (req, res, next) {
 */
 router.put("/", async function (req, res, next) {
     const { id, title, category, content } = req.body;
-    
+
     if(req.isAdmin === false) {
         return res.json({ status: false, message: "修改失敗" });
     }
@@ -58,8 +57,8 @@ router.put("/", async function (req, res, next) {
     }
 });
 
-/* 
-    刪除文章 
+/*
+    刪除文章
     delete /api/articles
 */
 router.delete("/", async function (req, res, next) {
