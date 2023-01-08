@@ -15,6 +15,7 @@ var articleManagerRouter = require('./routes/article-manager');
 var authApiRouter = require('./routes/api/auth');
 var usersApiRouter = require('./routes/api/users');
 var articlesApiRouter = require('./routes/api/articles');
+var memberApiRouter = require('./routes/api/member');
 
 var app = express();
 require('dotenv').config();
@@ -42,6 +43,7 @@ app.use('/article-manager', articleManagerRouter);
 app.use('/api/auth', authApiRouter);
 app.use('/api/users', usersApiRouter);
 app.use('/api/articles', articlesApiRouter);
+app.use('/api/member', memberApiRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
