@@ -1,8 +1,8 @@
 'use strict';
 
 const { query } = require('express');
-var argon2 = require('argon2');
 const { faker } = require('@faker-js/faker');
+var argon2 = require('argon2');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -23,8 +23,8 @@ module.exports = {
           name: faker.name.fullName(),
           account: faker.datatype.uuid(),
           password: faker.internet.password(),
-          createdAt: new Date(),
-          updatedAt: new Date(),
+          createdAt: faker.date.past(),
+          updatedAt: faker.date.past(),
         })
       ),{});
   },
