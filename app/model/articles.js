@@ -5,4 +5,13 @@ async function getArticlesDb() {
     return rows;
 }
 
-module.exports = { getArticlesDb };
+async function deleteArticleDb(id) {
+    const [rows, fields] = await mysql.execute('DELETE FROM `article` WHERE id = ?', [id]);
+    if (rows.affectedRows === 0) {
+        return false;
+    }else{
+        return true;
+    }
+}
+
+module.exports = { getArticlesDb , deleteArticleDb};

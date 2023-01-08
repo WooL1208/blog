@@ -1,9 +1,14 @@
 ﻿require('dotenv').config();
-var { getArticlesDb } = require('../model/articles');
+var { getArticlesDb, deleteArticleDb } = require('../model/articles');
 
 async function getArticles() {
     const articles = await getArticlesDb();
     return articles;
 }
 
-module.exports = { getArticles };
+async function deleteArticle(id) {
+    const ret = deleteArticleDb(id)
+    return ret;
+}
+
+module.exports = { getArticles, deleteArticle };

@@ -1,3 +1,21 @@
+const deleteArticle = async (id) => {
+    const response = await fetch(`/api/articles`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id
+        })
+    }).then(async (res) => {
+        return await res.json();
+    });
+    if (response.status) {
+        reloadArticlesList();
+    }
+}
+
+
 const reloadArticlesList = async() => {
     const response = await fetch('/api/articles', {
         method: 'GET'
@@ -16,7 +34,7 @@ const reloadArticlesList = async() => {
             <td>${response[i].name}(${response[i].account})</td>
             <td>${(response[i].create_time)}</td>
             <td>
-                <a href="/articles/${response[i].id}" class="btn btn-primary">編輯</a>
+                <a href="editor?mode=edit&id=${response[i].id}" class="btn btn-primary">編輯</a>
                 <button type="button" class="btn btn-danger" onclick="deleteArticle(${response[i].id})">刪除</button>
             </td>
         </tr>`;
