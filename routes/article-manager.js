@@ -7,13 +7,11 @@ require('dotenv').config();
  * get /article-manager
  */
 router.get("/", function (req, res, next) {
-  const { token } = req.signedCookies;
-
   if(req.isAdmin === false) {
     return res.redirect("/warning");
   }
 
-  res.render("article-manager/index", { title: '文章管理', token, admin: req.isAdmin });
+  res.render("article-manager/index", { title: '文章管理', isLoggedIn: req.isAdmin, admin: req.isAdmin });
 });
 
 
@@ -26,13 +24,11 @@ router.get("/", function (req, res, next) {
  * @url-query {string} id 文章id
  */
 router.get("/editor", function (req, res, next) {
-  const { token } = req.signedCookies;
-
   if(req.isAdmin === false) {
     return res.redirect("/warning");
   }
 
-  res.render("article-manager/editor", { title: '文章編輯器', token, admin: req.isAdmin });
+  res.render("article-manager/editor", { title: '文章編輯器', isLoggedIn: req.isAdmin, admin: req.isAdmin });
 });
 
 module.exports = router;

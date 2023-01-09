@@ -17,7 +17,7 @@
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" href="/">Home</a>
 						</li>
-						{% if (token) %}
+						{% if (isLoggedIn) %}
 							<li>
 								<a class="nav-link" id="logout" href="/">會員登出</a>
 							</li>
@@ -26,7 +26,7 @@
 								<a class="nav-link" href="/users/">會員登入</a>
 							</li>
 						{% endif %}
-						{% if admin %}
+						{% if isAdmin %}
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 									後台管理

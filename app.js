@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var { checkIsAdmin } = require('./app/view-model/auth');
+var { checkToken } = require('./app/view-model/auth');
 
 // frontend routes
 var indexRouter = require('./routes/index');
@@ -31,7 +31,7 @@ app.use(cookieParser(process.env['COOKIE_KEY']));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // middleware
-app.use(checkIsAdmin);
+app.use(checkToken);
 
 // frontend routes
 app.use('/', indexRouter);

@@ -9,7 +9,7 @@ var argon2 = require('argon2');
  * @returns {string} token
  */
 async function generateAccessToken(account) {
-    return jwt.sign({ 'account': account }, process.env.TOKEN_SECRET, { expiresIn: '7d' });
+    return jwt.sign({ 'account': account }, process.env.TOKEN_SECRET, { expiresIn: '12h' });
 }
 
 
@@ -59,19 +59,21 @@ async function login(account, password) {
  * @param {object} res response
  * @param {function} next next
  */
-async function checkIsAdmin(req, res, next) {
+async function checkToken(req, res, next) {
     const token = req.signedCookies.token;
     const decoded = await verifyToken(token);
     if (decoded) {
         const retAccount = await getAccount(decoded.account);
         req.isAdmin = Boolean(retAccount[0].is_admin);
+        req.isLoggedIn = true; 
         req.userId = retAccount[0].id;
     }
     else {
         req.isAdmin = false;
+        req.isLogin = false; 
     }
     next();
 };
 
 
-module.exports = { login, checkIsAdmin };
+module.exports = { login, checkToken };
