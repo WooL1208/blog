@@ -32,14 +32,17 @@ const reloadArticlesList = async() => {
     let articlesList = '';
     console.log({'js': response});
     for (let i = 0; i < response.length; i++) {
+        let createdAt = new Date(response[i].createdAt).toLocaleString('zh-TW', { timeZone: 'UTC',hour12:false})
+        let updatedAt = new Date(response[i].updatedAt).toLocaleString('zh-TW', { timeZone: 'UTC',hour12:false })
         articlesList += `
         <tr>
             <th scope="row">${response[i].id}</th>
             <td>${response[i].title}</td>
             <td>${response[i].category}</td>
             <td>${response[i].name}(${response[i].account})</td>
-            <td>${(response[i].createdAt)}</td>
-            <td>
+            <td>${createdAt}</td>
+            <td>${updatedAt}</td>
+            <td style="text-align:right">
                 <a href="/article-manager/editor?mode=edit&id=${response[i].id}" class="btn btn-primary">編輯</a>
                 <button type="button" class="btn btn-danger" onclick="deleteArticle(${response[i].id})">刪除</button>
             </td>
