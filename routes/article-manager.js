@@ -11,7 +11,7 @@ router.get("/", function (req, res, next) {
     return res.redirect("/warning");
   }
 
-  res.render("article-manager/index", { title: '文章管理', isLoggedIn: req.isAdmin, admin: req.isAdmin });
+  res.render("article-manager/index", { title: '文章管理', isLoggedIn: req.isAdmin, isAdmin: req.isAdmin });
 });
 
 
@@ -28,7 +28,7 @@ router.get("/editor", function (req, res, next) {
     return res.redirect("/warning");
   }
 
-  res.render("article-manager/editor", { title: '文章編輯器', isLoggedIn: req.isAdmin, admin: req.isAdmin });
+  res.render("article-manager/editor", { title: '文章編輯器', isLoggedIn: req.isAdmin, isAdmin: req.isAdmin });
 });
 
 module.exports = router;
