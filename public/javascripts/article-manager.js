@@ -1,3 +1,5 @@
+import { escapeHtml } from './utils.js';
+
 /* 
     刪除文章
     @param id 文章id
@@ -37,7 +39,7 @@ const reloadArticlesList = async() => {
         articlesList += `
         <tr>
             <th scope="row">${response[i].id}</th>
-            <td>${response[i].title}</td>
+            <td>${escapeHtml(response[i].title)}</td>
             <td>${response[i].category}</td>
             <td>${response[i].name}(${response[i].account})</td>
             <td>${createdAt}</td>

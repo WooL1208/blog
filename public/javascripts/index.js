@@ -1,4 +1,6 @@
-﻿const getArticles = async(response) => {
+﻿import { escapeHtml } from './utils.js';
+
+const getArticles = async(response) => {
     const checked = await document.querySelector('input[name=btnradio]:checked')
 
     if (checked.id === 'btnradio1') {
@@ -40,8 +42,8 @@ const reloadArticles = async() => {
                     ${articles[i].category}
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">${articles[i].title}</h5>
-                    <p class="card-text">${articles[i].content}</p>
+                    <h5 class="card-title">${escapeHtml(articles[i].title)}</h5>
+                    <p class="card-text">${escapeHtml(articles[i].content)}</p>
                 </div>
             </div>
         </div>
