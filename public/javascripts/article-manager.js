@@ -93,8 +93,14 @@ const getAllArticles = async () => {
  */
 const searchArticles = async () => {
     const title = document.getElementById('search-title').value;
-    console.log(title);
-    const response = await fetch(`/api/articles?title=${title}`, {
+    let category = document.getElementById('search-category').value;
+    console.log({title, category});
+
+    if (category == '全部') {
+        category = '';
+    }
+
+    const response = await fetch(`/api/articles?title=${title}&category=${category}`, {
         method: 'GET'
     }).then(async (res) => {
         return await res.json();
@@ -104,4 +110,5 @@ const searchArticles = async () => {
 
 
 document.getElementById('search-title').addEventListener('keyup', async (e) => { await reloadArticlesList(await searchArticles()) });
+document.getElementById('search-category').addEventListener('change', async (e) => { await reloadArticlesList(await searchArticles()) });
 reloadArticlesList(await getAllArticles());

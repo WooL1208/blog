@@ -14,8 +14,8 @@
 		<thead class="table-dark">
 			<tr>
 				<th scope="col" style="width: 5%">#</th>
-				<th scope="col" style="width: 30%">文章名</th>
-				<th scope="col" style="width: 5%">類別</th>
+				<th scope="col" style="width: 28%">文章名</th>
+				<th scope="col" style="width: 7%">類別</th>
 				<th scope="col" style="width: 16%">作者</th>
 				<th scope="col" style="width: 12%">創建時間</th>
 				<th scope="col" style="width: 12%">更新時間</th>
@@ -27,6 +27,15 @@
 				<th scope="row"></th>
 				<td>
 					<input type="text" class="form-control" id="search-title" placeholder="文章名">
+				</td>
+				<td>
+					<select class="form-control" id="search-category">
+						<option selected value="全部">全部</option>
+						<option value="生活">生活</option>
+						<option value="科技">科技</option>
+						<option value="美食">美食</option>
+						<option value="理財">理財</option>
+					</select>
 				</td>
 			</tr>
 		</tbody>

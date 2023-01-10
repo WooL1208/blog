@@ -1,6 +1,6 @@
 var express = require("express");
 require('dotenv').config();
-var { getArticles, getArticlesById, getArticlesByTitle, addArticle, editArticle, deleteArticle } = require('../../app/view-model/articles');
+var { getArticles, addArticle, editArticle, deleteArticle } = require('../../app/view-model/articles');
 var router = express.Router();
 
 /*
@@ -8,18 +8,10 @@ var router = express.Router();
     get /api/articles
 */
 router.get('/', async function (req, res, next) {
-    const { id, title } = req.query;
-    if (id) {
-        const articles = await getArticlesById(id);
-        return res.json(articles[0]);
-    } else if (title) {
-        const articles = await getArticlesByTitle(title);
-        return res.json(articles);
-    }
-    else {
-        const articles = await getArticles();
-        return res.json(articles)
-    }
+    const { id, title, category } = req.query;
+    const articles = await getArticles(id, title, category);
+    return res.json(articles)
+
 });
 
 /*

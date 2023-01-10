@@ -33,7 +33,7 @@ const getArticle = async () => {
     }).then(async (res) => {
         return await res.json();
     });
-    return response;
+    return response[0];
 }
 
 const setContent = async () => {

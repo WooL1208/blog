@@ -1,32 +1,16 @@
 ﻿require('dotenv').config();
-var { getArticlesDb, getArticlesByIdDb, getArticlesByTitleDb, addArticleDb, editArticleDb, deleteArticleDb } = require('../model/articles');
+var { getArticlesDb, addArticleDb, editArticleDb, deleteArticleDb } = require('../model/articles');
+
 
 /**
- * 取得所有文章
- * @returns {object} 文章資料
- */
-async function getArticles() {
-    const articles = await getArticlesDb();
-    return articles;
-}
-
-/**
- * 取得指定ID的文章
+ * 取得指定的文章
  * @param {number} id 文章ID
- * @returns {object} 文章資料
- */
-async function getArticlesById(id) {
-    const articles = await getArticlesByIdDb(id);
-    return articles;
-}
-
-/**
- * 取得指定標題的文章
  * @param {number} title 文章標題
+ * @param {number} category 文章分類
  * @returns {object} 文章資料
  */
-async function getArticlesByTitle(title) {
-    const articles = await getArticlesByTitleDb(title);
+async function getArticles(id, title, category) {
+    const articles = await getArticlesDb(id, title, category);
     return articles;
 }
 
@@ -66,4 +50,4 @@ async function deleteArticle(id) {
     return ret;
 }
 
-module.exports = { getArticles, getArticlesById, getArticlesByTitle, addArticle, editArticle, deleteArticle };
+module.exports = { getArticles, addArticle, editArticle, deleteArticle };

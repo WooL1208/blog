@@ -1,36 +1,24 @@
 ﻿var { promisePool: mysql } = require('../../lib/mysql');
 
 /**
- * 從DB取得所有文章
- * @returns {object} 文章資料
- */
-async function getArticlesDb() {
-    const [rows, fields] = await mysql.execute('SELECT articles.id, title, category, user_id, users.name, users.account, content, articles.createdAt, articles.updatedAt FROM `articles` INNER JOIN `users` ON articles.user_id = users.id');
-    return rows;
-}
-
-
-/**
- * 從DB取得指定ID的文章
+ * 從DB取得指定的文章
  * @param {number} id 文章ID
- * @returns {object} 文章資料
- */
-async function getArticlesByIdDb(id) {
-    const [rows, fields] = await mysql.execute('SELECT articles.id, title, category, user_id, users.name, users.account, content, articles.createdAt, articles.updatedAt FROM `articles` INNER JOIN `users` ON articles.user_id = users.id WHERE articles.id = ?', [id]);
-    return rows;
-}
-
-/**
- * 從DB取得指定標題的文章
  * @param {number} title 文章標題
+ * @param {number} category 文章分類
  * @returns {object} 文章資料
  */
-async function getArticlesByTitleDb(title) {
-    const [rows, fields] = await mysql.execute('SELECT articles.id, title, category, user_id, users.name, users.account, content, articles.createdAt, articles.updatedAt FROM `articles` INNER JOIN `users` ON articles.user_id = users.id WHERE articles.title LIKE ?', [`%${title}%`]);
-    // // debug
-    // const sql = mysql.format('SELECT articles.id, title, category, user_id, users.name, users.account, content, articles.createdAt, articles.updatedAt FROM `articles` INNER JOIN `users` ON articles.user_id = users.id WHERE articles.title LIKE ?', [`%${title}%`]);
-    // console.log(sql)
-    return rows;
+async function getArticlesDb(id, title = "", category = "") {
+    if (id) {
+        const [rows, fields] = await mysql.execute('SELECT articles.id, title, category, user_id, users.name, users.account, content, articles.createdAt, articles.updatedAt FROM `articles` INNER JOIN `users` ON articles.user_id = users.id WHERE articles.id=?', [id]);
+        return rows;
+    } else {
+        const [rows, fields] = await mysql.execute('SELECT articles.id, title, category, user_id, users.name, users.account, content, articles.createdAt, articles.updatedAt FROM `articles` INNER JOIN `users` ON articles.user_id = users.id WHERE articles.title LIKE ? AND category LIKE ?', [`%${title}%`, `%${category}%`]);
+
+        // // debug
+        // const sql = mysql.format('SELECT articles.id, title, category, user_id, users.name, users.account, content, articles.createdAt, articles.updatedAt FROM `articles` INNER JOIN `users` ON articles.user_id = users.id WHERE articles.title LIKE ? AND category LIKE ?', [`%${title}%`, `%${category}%`]);
+        // console.log(sql)
+        // return rows;
+    }
 }
 
 /**
@@ -81,4 +69,4 @@ async function deleteArticleDb(id) {
     }
 }
 
-module.exports = { getArticlesDb, getArticlesByIdDb, getArticlesByTitleDb, addArticleDb, editArticleDb, deleteArticleDb };
+module.exports = { getArticlesDb, addArticleDb, editArticleDb, deleteArticleDb };
