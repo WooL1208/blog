@@ -9,14 +9,14 @@ var router = express.Router();
 */
 router.get('/', async function (req, res, next) {
     const { id } = req.query;
-    console.log({'id': id});
+    // console.log({'id': id});
     if (id) {
         const user = await getSingleUser(id);
-        console.log({'getSingle': user});
+        // console.log({'getSingle': user});
         return res.json(user);
     } else {
         const users = await getUsers();
-        console.log({'getUsers': users});
+        // console.log({'getUsers': users});
         return res.json(users)
     }
 });

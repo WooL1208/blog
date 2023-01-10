@@ -21,7 +21,7 @@ const editMember = async (event) => {
     const identity = document.getElementById('identity').value;
     const member = document.getElementById('edit-name').value;
 
-    console.log(identity, member);
+    // console.log(identity, member);
 
     const response = await fetch('/api/member', {
         method: 'PUT',
