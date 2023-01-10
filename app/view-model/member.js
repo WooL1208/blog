@@ -7,13 +7,13 @@ var { getUsersDb, getSingleUserDb, deleteUserDb, editUserDb } = require('../mode
  */
 async function getUsers() {
     const users = await getUsersDb();
-    console.log({'getUsers': users});
+    // console.log({'getUsers': users});
     return users;
 }
 
 async function getSingleUser(id) {
     const user = await getSingleUserDb(id);
-    console.log({'getSingleUser': user});
+    // console.log({'getSingleUser': user});
     return user;
 }
 
