@@ -64,13 +64,18 @@ async function checkToken(req, res, next) {
     const decoded = await verifyToken(token);
     if (decoded) {
         const retAccount = await getAccount(decoded.account);
-        req.isAdmin = Boolean(retAccount[0].is_admin);
-        req.isLoggedIn = true; 
-        req.userId = retAccount[0].id;
+        if (retAccount.length === 1) {
+            req.isAdmin = Boolean(retAccount[0].is_admin);
+            req.isLoggedIn = true;
+            req.userId = retAccount[0].id;
+        } else {
+            req.isAdmin = false;
+            req.isLogin = false;
+        }
     }
     else {
         req.isAdmin = false;
-        req.isLogin = false; 
+        req.isLogin = false;
     }
     next();
 };

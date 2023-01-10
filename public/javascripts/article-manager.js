@@ -1,9 +1,9 @@
 import { escapeHtml } from './utils.js';
 
-/* 
-    刪除文章
-    @param id 文章id
-*/
+/**
+ * 刪除文章
+ * @param {number} id 文章ID
+ */
 const deleteArticle = async (id) => {
     const response = await fetch(`/api/articles`, {
         method: 'DELETE',
@@ -17,41 +17,91 @@ const deleteArticle = async (id) => {
         return await res.json();
     });
     if (response.status) {
-        reloadArticlesList();
+        await reloadArticlesList(await getAllArticles());
     }
 }
 
-/*
-    重新載入文章列表
-*/
-const reloadArticlesList = async() => {
+/**
+ * 重新載入文章列表
+ * @param {Array} articles 文章列表
+ */
+// const reloadArticlesList = async (articles) => {
+//     let articlesList = '';
+//     for (let i = 0; i < articles.length; i++) {
+//         let createdAt = new Date(articles[i].createdAt).toLocaleString('zh-TW', { timeZone: 'UTC', hour12: false })
+//         let updatedAt = new Date(articles[i].updatedAt).toLocaleString('zh-TW', { timeZone: 'UTC', hour12: false })
+//         articlesList += `
+//         <tr>
+//             <th scope="row">${articles[i].id}</th>
+//             <td>${escapeHtml(articles[i].title)}</td>
+//             <td>${articles[i].category}</td>
+//             <td>${articles[i].name}(${articles[i].account})</td>
+//             <td>${createdAt}</td>
+//             <td>${updatedAt}</td>
+//             <td style="text-align:right">
+//                 <a href="/article-manager/editor?mode=edit&id=${articles[i].id}" class="btn btn-primary">編輯</a>
+//                 <button type="button" class="btn btn-danger" onclick="deleteArticle(${articles[i].id})">刪除</button>
+//             </td>
+//         </tr>`;
+
+//     }
+//     document.querySelector("#articles-list").innerHTML = articlesList;
+// }
+const reloadArticlesList = async (articles) => {
+    let articlesList = '';
+    for (let i = 0; i < articles.length; i++) {
+        let createdAt = new Date(articles[i].createdAt).toLocaleString('zh-TW', { timeZone: 'UTC', hour12: false })
+        let updatedAt = new Date(articles[i].updatedAt).toLocaleString('zh-TW', { timeZone: 'UTC', hour12: false })
+        articlesList += `
+        <tr>
+            <th scope="row">${articles[i].id}</th>
+            <td>${escapeHtml(articles[i].title)}</td>
+            <td>${articles[i].category}</td>
+            <td>${articles[i].name}(${articles[i].account})</td>
+            <td>${createdAt}</td>
+            <td>${updatedAt}</td>
+            <td style="text-align:right">
+                <a href="/article-manager/editor?mode=edit&id=${articles[i].id}" class="btn btn-primary">編輯</a>
+                <button type="button" class="btn btn-danger delete-btn" value=${articles[i].id}>刪除</button>
+            </td>
+        </tr>`;
+    }
+    document.querySelector("#articles-list").innerHTML = articlesList;
+
+    const deleteBtns = document.querySelectorAll('.delete-btn');
+    deleteBtns.forEach((btn) => {
+        btn.addEventListener('click', async (e) => {
+            await deleteArticle(e.target.value);
+        });
+    });
+}
+
+/**
+ * 取得所有文章
+ */
+const getAllArticles = async () => {
     const response = await fetch('/api/articles', {
         method: 'GET'
     }).then(async (res) => {
         return await res.json();
     });
-
-    let articlesList = '';
-    console.log({'js': response});
-    for (let i = 0; i < response.length; i++) {
-        let createdAt = new Date(response[i].createdAt).toLocaleString('zh-TW', { timeZone: 'UTC',hour12:false})
-        let updatedAt = new Date(response[i].updatedAt).toLocaleString('zh-TW', { timeZone: 'UTC',hour12:false })
-        articlesList += `
-        <tr>
-            <th scope="row">${response[i].id}</th>
-            <td>${escapeHtml(response[i].title)}</td>
-            <td>${response[i].category}</td>
-            <td>${response[i].name}(${response[i].account})</td>
-            <td>${createdAt}</td>
-            <td>${updatedAt}</td>
-            <td style="text-align:right">
-                <a href="/article-manager/editor?mode=edit&id=${response[i].id}" class="btn btn-primary">編輯</a>
-                <button type="button" class="btn btn-danger" onclick="deleteArticle(${response[i].id})">刪除</button>
-            </td>
-        </tr>`;
-    
-    }
-    document.querySelector("#articles-list").innerHTML = articlesList;
+    return response;
 }
 
-reloadArticlesList();
+/**
+ * 搜尋文章
+ */
+const searchArticles = async () => {
+    const title = document.getElementById('search-title').value;
+    console.log(title);
+    const response = await fetch(`/api/articles?title=${title}`, {
+        method: 'GET'
+    }).then(async (res) => {
+        return await res.json();
+    });
+    return response;
+}
+
+
+document.getElementById('search-title').addEventListener('keyup', async (e) => { await reloadArticlesList(await searchArticles()) });
+reloadArticlesList(await getAllArticles());
