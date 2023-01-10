@@ -41,6 +41,7 @@ const setContent = async () => {
     document.getElementById('title').value = article.title;
     document.getElementById('category').value = article.category;
     document.getElementById('content').value = article.content;
+    auto_grow(document.getElementById('content'));
 }
 
 const editArticle = async (event) => {
