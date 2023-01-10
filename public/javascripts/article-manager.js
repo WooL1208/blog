@@ -25,28 +25,6 @@ const deleteArticle = async (id) => {
  * 重新載入文章列表
  * @param {Array} articles 文章列表
  */
-// const reloadArticlesList = async (articles) => {
-//     let articlesList = '';
-//     for (let i = 0; i < articles.length; i++) {
-//         let createdAt = new Date(articles[i].createdAt).toLocaleString('zh-TW', { timeZone: 'UTC', hour12: false })
-//         let updatedAt = new Date(articles[i].updatedAt).toLocaleString('zh-TW', { timeZone: 'UTC', hour12: false })
-//         articlesList += `
-//         <tr>
-//             <th scope="row">${articles[i].id}</th>
-//             <td>${escapeHtml(articles[i].title)}</td>
-//             <td>${articles[i].category}</td>
-//             <td>${articles[i].name}(${articles[i].account})</td>
-//             <td>${createdAt}</td>
-//             <td>${updatedAt}</td>
-//             <td style="text-align:right">
-//                 <a href="/article-manager/editor?mode=edit&id=${articles[i].id}" class="btn btn-primary">編輯</a>
-//                 <button type="button" class="btn btn-danger" onclick="deleteArticle(${articles[i].id})">刪除</button>
-//             </td>
-//         </tr>`;
-
-//     }
-//     document.querySelector("#articles-list").innerHTML = articlesList;
-// }
 const reloadArticlesList = async (articles) => {
     let articlesList = '';
     for (let i = 0; i < articles.length; i++) {
