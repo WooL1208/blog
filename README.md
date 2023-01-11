@@ -17,3 +17,6 @@ On Windows PowerShell, use this command:
 
 生成假資料：
 > npx sequelize db:seed:all
+
+生使用者假資料：
+> node .\ajax-services\fake.js
