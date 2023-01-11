@@ -44,7 +44,7 @@ router.get('/test', async function (req, res, next) {
 router.post("/", async function (req, res, next) {
   const { name, account, password } = req.body;
 
-  if (await register(name, account, password)) {
+  if (await register(name, account, password, 0)) {
       return res.json({ status: true, message: '註冊成功' });
   }
   else {

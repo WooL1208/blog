@@ -18,7 +18,7 @@ CREATE TABLE `articles` (
   `updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `article_ibfk_4` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `article_ibfk_4` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -33,8 +33,8 @@ CREATE TABLE `messages` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `article_id` (`article_id`),
-  CONSTRAINT `message_ibfk_4` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `message_ibfk_5` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -50,5 +50,9 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `users` (`id`, `is_admin`, `name`, `account`, `password`, `createdAt`, `updatedAt`) VALUES
+(1,	1,	'root',	'root',	'$argon2id$v=19$m=65536,t=3,p=4$knTbTB1eoKeElUyEXN4tWg$eDipEwuSSWckgTLMkFfKx4yCL75vEilfRxnF+oJ3j/k',	'2023-01-11 17:49:59',	'2023-01-11 17:49:59'),
+(2,	1,	'author0',	'author0',	'$argon2id$v=19$m=65536,t=3,p=4$60i/oyKFoQXnQDuBhDv2Xg$36GE6/VV43XVTCvOyPBdik1/1zIDYJ9Fsxvj52XP7oI',	'2023-01-11 17:49:59',	'2023-01-11 17:49:59'),
+(8,	0,	'user0',	'user0',	'$argon2id$v=19$m=65536,t=3,p=4$1q8R2jSS5f1BQq7o3WzWjA$0IuwW1jvwoZZyb/R9MkSvNU4s70uD/0gUeuRH+mgh7Y',	'2023-01-11 17:50:00',	'2023-01-11 17:50:00');
 
--- 2023-01-11 16:57:22
+-- 2023-01-11 17:52:59

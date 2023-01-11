@@ -16,9 +16,9 @@ async function getAccount(account) {
  * @param {string} account 帳號
  * @param {string} hashedPassword 雜湊密碼
  */
-async function registerAccount(name, account, hashedPassword) {
+async function registerAccount(name, account, hashedPassword, isAdmin) {
     try {
-        const [rows, fields] = await mysql.execute('INSERT INTO `users` (is_admin, name, account, password) VALUES (0, ?, ?, ?)', [name, account, hashedPassword]);
+        const [rows, fields] = await mysql.execute('INSERT INTO `users` (is_admin, name, account, password) VALUES (?, ?, ?, ?)', [isAdmin, name, account, hashedPassword]);
         return true;
     }
     catch (err) {

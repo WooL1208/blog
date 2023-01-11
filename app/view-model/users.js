@@ -9,7 +9,7 @@ var argon2 = require('argon2');
  * @param {string} password 密碼
  * @returns {boolean} 是否註冊成功
  */
-async function register(name, account, password) {
+async function register(name, account, password, isAdmin) {
     const hashedPassword = await argon2.hash(password);
 
     // 檢查帳號是否重複
@@ -19,7 +19,7 @@ async function register(name, account, password) {
     }
 
     // 註冊
-    if (await registerAccount(name, account, hashedPassword)) {
+    if (await registerAccount(name, account, hashedPassword, isAdmin)) {
         return true;
     } else {
         return false;
