@@ -5,7 +5,7 @@ const { faker } = require('@faker-js/faker');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    const categories = ['生活', '科技', '美食', '理財']
+    const categories = ['生活', '科技', '美食', '理財'];
     await queryInterface.bulkInsert('articles',
       Array.from({ length: 50 }).map(d =>
         ({
