@@ -86,7 +86,13 @@ const searchArticles = async () => {
     return response;
 }
 
+const getPageArticles = async (articles, page) => {
+    const start = (page - 1) * 10;
+    const end = start + 10;
+    return articles.slice(start, end);
+}
+
 
 document.getElementById('search-title').addEventListener('keyup', async (e) => { await reloadArticlesList(await searchArticles()) });
 document.getElementById('search-category').addEventListener('change', async (e) => { await reloadArticlesList(await searchArticles()) });
-reloadArticlesList(await getAllArticles());
+reloadArticlesList(await getPageArticles(await getAllArticles(),1));
