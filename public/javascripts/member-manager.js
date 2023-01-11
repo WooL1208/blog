@@ -1,4 +1,6 @@
-const deleteMember = async (id) => {
+let pageId = document.getElementById('page-id');
+
+const deleteMember = async (id, nowPage) => {
     const response = await fetch(`/api/member`, {
         method: 'DELETE',
         headers: {
@@ -11,11 +13,11 @@ const deleteMember = async (id) => {
         return await res.json();
     });
     if (response.status) {
-        reloadMemberData();
+        reloadMemberData(nowPage);
     }
 }
 
-const reloadMemberData = async () => {
+const reloadMemberData = async (nowPage) => {
     const memberResponse = await fetch('/api/member', {
         method: 'GET'
     }).then(async (res) => {
@@ -23,31 +25,77 @@ const reloadMemberData = async () => {
     });
     let memberList = '';
     // let i = 0; i < memberResponse.length ; i++
-    let dataRange = getDataLength();
-    for (let i = (await dataRange).min; i < (await dataRange).max ; i++) {
-        let identity;
-        if (memberResponse[i].is_admin == 1){
-            identity = '管理員';
-        } else {
-            identity = '會員';
+    let dataRange = getDataLength(nowPage);
+    if ((await dataRange).current == (await dataRange).total) {
+        for (let i = (await dataRange).min; i < memberResponse.length ; i++) {
+            let identity;
+            if (memberResponse[i].is_admin == 1){
+                identity = '管理員';
+            } else {
+                identity = '會員';
+            }
+            memberList += `
+            <tr>
+                <th scope="row">${memberResponse[i].id}</th>
+                <td>${identity}</td>
+                <td>${memberResponse[i].name}</td>
+                <td>${memberResponse[i].account}</td>
+                <td>
+                    <a href="/member-manager/editor?id=${memberResponse[i].id}" class="btn btn-primary">編輯</a>
+                    <button type="button" class="btn btn-danger" onclick="deleteMember(${memberResponse[i].id}, ${(await dataRange).current})">刪除</button>
+                </td>
+            </tr>`;
         }
-        memberList += `
-        <tr>
-            <th scope="row">${memberResponse[i].id}</th>
-            <td>${identity}</td>
-            <td>${memberResponse[i].name}</td>
-            <td>${memberResponse[i].account}</td>
-            <td>
-                <a href="/member-manager/editor?id=${memberResponse[i].id}" class="btn btn-primary">編輯</a>
-                <button type="button" class="btn btn-danger" onclick="deleteMember(${memberResponse[i].id})">刪除</button>
-            </td>
-        </tr>`;
+    } else {
+        for (let i = (await dataRange).min; i < (await dataRange).max ; i++) {
+            let identity;
+            if (memberResponse[i].is_admin == 1){
+                identity = '管理員';
+            } else {
+                identity = '會員';
+            }
+            memberList += `
+            <tr>
+                <th scope="row">${memberResponse[i].id}</th>
+                <td>${identity}</td>
+                <td>${memberResponse[i].name}</td>
+                <td>${memberResponse[i].account}</td>
+                <td>
+                    <a href="/member-manager/editor?id=${memberResponse[i].id}" class="btn btn-primary">編輯</a>
+                    <button type="button" class="btn btn-danger" onclick="deleteMember(${memberResponse[i].id}, ${(await dataRange).current})">刪除</button>
+                </td>
+            </tr>`;
+        }
     }
 
     document.querySelector('#member-list').innerHTML = memberList;
+
+    let str = '';
+
+    if((await dataRange).hasPage) {
+        str += `<li class="page-item"><a class="page-link" href="#" data-page="${Number((await dataRange).current) - 1}">＜</a></li>`;
+    } else {
+        str += `<li class="page-item disabled"><span class="page-link">＜</span></li>`;
+    }
+    
+    for(let i = 1; i <= (await dataRange).total; i++){
+        if(Number((await dataRange).current) === i) {
+        str +=`<li class="page-item active"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
+        } else {
+            str +=`<li class="page-item"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
+        }
+    };
+    
+    if((await dataRange).hasNext) {
+        str += `<li class="page-item"><a class="page-link" href="#" data-page="${Number((await dataRange).current) + 1}">＞</a></li>`;
+    } else {
+        str += `<li class="page-item disabled"><span class="page-link">＞</span></li>`;
+    }
+
+    pageId.innerHTML = str;
 };
 
-const getDataLength = async () => {
+const getDataLength = async (nowPage) => {
     const response = await fetch('/api/member', {
         method: 'GET'
     }).then(async (res) => {
@@ -56,12 +104,10 @@ const getDataLength = async () => {
 
     let dataTotal = response.length;
 
-    // 要顯示在畫面上的資料數量，預設每一頁只顯示十筆資料。
+    // 預設每一頁只顯示十筆資料。
     let dataShow = 10;
     let pageTotal = Math.ceil(dataTotal / dataShow);
-    console.log(`全部資料:${dataTotal} 每一頁顯示:${dataShow}筆 總頁數:${pageTotal}`);
-
-    let currentPage = 1;
+    let currentPage = nowPage;
 
     if (currentPage > pageTotal) {
         currentPage = pageTotal;
@@ -70,29 +116,16 @@ const getDataLength = async () => {
     let minData = (currentPage * dataShow) - dataShow;
     let maxData = (currentPage * dataShow);
 
-    const page = {
-        pageTotal,
-        currentPage,
-        hasPage: currentPage > 1,
-        hasNext: currentPage < pageTotal,
-    }
-    pageBtn(page);
-
-    return {min:minData, max:maxData}
+    return {min:minData, max:maxData, total:pageTotal, current:currentPage, hasPage:currentPage > 1, hasNext: currentPage < pageTotal}
 }
 
-const pageId = document.getElementById('page-id');
-
-function pageBtn (page){
-    let str = '';
-    const total = page.dataTotal;
-    
-    for(let i = 0; i < total; i++){
-        str +=`<li class="page-item"><a class="page-link" href="#">${i}</a></li>`;
-    };
-    // document.querySelector('#page-id').innerHTML = str;
-    pageId.innerHTML = str;
+function switchPage(e){
+    e.preventDefault();
+    if(e.target.nodeName !== 'A') return;
+    let page = e.target.dataset.page;
+    reloadMemberData(page);
 }
 
-// getDataLength();
-reloadMemberData();
+pageId.addEventListener('click', switchPage);
+
+reloadMemberData(1);
