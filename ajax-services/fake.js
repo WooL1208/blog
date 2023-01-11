@@ -3,10 +3,15 @@ let { register } = require('../app/view-model/users');
 let { addArticle } = require('../app/view-model/articles');
 const { faker } = require('@faker-js/faker');
 
-const authorAmount = 5;
-const userAmount = 50;
-const articleAmount = 50;
+const authorAmount = 5; // 作者數量
+const userAmount = 50; // 一般使用者數量
+const articleAmount = 50; // 文章數量
 
+/**
+ * 產生使用者假資料
+ * @param {number} authorAmount 作者數量
+ * @param {number} userAmount 一般使用者數量
+ */
 async function generateUsers(authorAmount, userAmount) {
     await mysql.execute(`
         CREATE TABLE \`users\` (
@@ -30,6 +35,10 @@ async function generateUsers(authorAmount, userAmount) {
     }
 }
 
+/**
+ * 產生文章假資料
+ * @param {number} authorAmount 作者數量
+ */
 async function generateArticles(authorAmount) {
     const categories = ['生活', '科技', '美食', '理財'];
     await mysql.execute(`
@@ -55,6 +64,9 @@ async function generateArticles(authorAmount) {
     }
 }
 
+/**
+ * 產生留言假資料
+ */
 async function generateMessages() {
     await mysql.execute(`
         CREATE TABLE \`messages\` (
@@ -71,9 +83,13 @@ async function generateMessages() {
             CONSTRAINT \`message_ibfk_5\` FOREIGN KEY (\`article_id\`) REFERENCES \`articles\` (\`id\`) ON DELETE CASCADE ON UPDATE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     `);
+    /* TODO: 生成資料 */
 }
 
-async function dropAllTable(){
+/**
+ * 刪除所有資料表
+ */
+async function dropAllTable() {
     await mysql.execute(`
         DROP TABLE IF EXISTS \`messages\`;
     `);
@@ -85,11 +101,14 @@ async function dropAllTable(){
     `);
 }
 
+/**
+ * 主程式
+ */
 async function main() {
     await dropAllTable();
     await generateUsers(authorAmount, userAmount);
     await generateArticles(authorAmount);
-    await generateMessages(); 
+    await generateMessages();
     process.exit();
 }
 
