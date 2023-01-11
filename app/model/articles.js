@@ -17,7 +17,7 @@ async function getArticlesDb(id, title = "", category = "") {
         // // debug
         // const sql = mysql.format('SELECT articles.id, title, category, user_id, users.name, users.account, content, articles.createdAt, articles.updatedAt FROM `articles` INNER JOIN `users` ON articles.user_id = users.id WHERE articles.title LIKE ? AND category LIKE ?', [`%${title}%`, `%${category}%`]);
         // console.log(sql)
-        // return rows;
+        return rows;
     }
 }
 
