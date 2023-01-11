@@ -1,4 +1,5 @@
 import { escapeHtml } from './utils.js';
+let currentPage = 1;
 
 /**
  * 刪除文章
@@ -17,7 +18,7 @@ const deleteArticle = async (id) => {
         return await res.json();
     });
     if (response.status) {
-        await reloadArticlesList(await getAllArticles());
+        await reloadAll();
     }
 }
 
@@ -92,7 +93,52 @@ const getPageArticles = async (articles, page) => {
     return articles.slice(start, end);
 }
 
+const reloadPageNav = async (articleAmount) => {
+    const pageUl = document.getElementById("article-page-ul");
+    const pageAmount = Math.ceil(articleAmount / 10);
+    
+    let pageHtml = '';
 
-document.getElementById('search-title').addEventListener('keyup', async (e) => { await reloadArticlesList(await searchArticles()) });
-document.getElementById('search-category').addEventListener('change', async (e) => { await reloadArticlesList(await searchArticles()) });
-reloadArticlesList(await getPageArticles(await getAllArticles(),1));
+    // 上一頁按鈕
+    if (pageAmount > 1) {
+        pageHtml += `<li class="page-item"><a class="page-link" href="#" data-page="${currentPage - 1}">＜</a></li>`;
+    } else {
+        pageHtml += `<li class="page-item disabled"><span class="page-link">＜</span></li>`;
+    }
+
+    for (let i = 1; i <= pageAmount; ++i) {
+        if (currentPage === i) {
+            pageHtml += `<li class="page-item active"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
+        } else {
+            pageHtml += `<li class="page-item"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
+        }
+    };
+
+    if (currentPage < pageAmount) {
+        pageHtml += `<li class="page-item"><a class="page-link" href="#" data-page="${currentPage + 1}">＞</a></li>`;
+    } else {
+        pageHtml += `<li class="page-item disabled"><span class="page-link">＞</span></li>`;
+    }
+
+    pageUl.innerHTML = pageHtml;
+}
+
+const switchPage = async (e) => {
+    e.preventDefault();
+    if (e.target.nodeName !== 'A') return;
+    currentPage = Number(e.target.dataset.page);
+    await reloadAll();
+}
+
+const reloadAll = async () => {
+    const articles = await searchArticles();
+    const PageArticles = await getPageArticles(articles, currentPage);
+    await reloadArticlesList(PageArticles);
+    await reloadPageNav(articles.length);
+}
+
+
+document.getElementById('search-title').addEventListener('keyup', reloadAll);
+document.getElementById('search-category').addEventListener('change', reloadAll);
+document.getElementById('article-page-ul').addEventListener('click', switchPage);
+reloadArticlesList(await reloadAll());
