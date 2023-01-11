@@ -4,8 +4,8 @@
  * 從DB取得所有使用者資訊
  * @returns {object} 使用者資訊
  */
-async function getUsersDb() {
-    const [rows, fields] = await mysql.execute('SELECT `users`.`id`,`users`.`is_admin`, `users`.`name`, `users`.`account` FROM `users`');
+async function getUsersDb(isAdmin='', name='') {
+    const [rows, fields] = await mysql.execute('SELECT `users`.`id`,`users`.`is_admin`, `users`.`name`, `users`.`account` FROM `users` WHERE users.is_admin LIKE ? AND users.name LIKE ?', [`%${isAdmin}%`, `%${name}%`]);
     return rows;
 }
 

@@ -8,14 +8,14 @@ var router = express.Router();
     get /api/member
 */
 router.get('/', async function (req, res, next) {
-    const { id } = req.query;
+    const { id, isAdmin, name } = req.query;
     // console.log({'id': id});
     if (id) {
         const user = await getSingleUser(id);
         // console.log({'getSingle': user});
         return res.json(user);
     } else {
-        const users = await getUsers();
+        const users = await getUsers(isAdmin, name);
         // console.log({'getUsers': users});
         return res.json(users)
     }

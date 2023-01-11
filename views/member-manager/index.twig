@@ -1,33 +1,49 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-  <h1>{{title}}</h1>
+	<h1>{{title}}</h1>
 
-  <table class="table">
+	<table class="table">
 		<thead class="table-dark">
-      <tr>
-        <th scope="col" width="15%">#</th>
+			<tr>
+				<th scope="col" width="15%">#</th>
 				<th scope="col" width="15%">身份</th>
 				<th scope="col">名稱</th>
 				<th scope="col">帳號</th>
 				<th scope="col" width="15%">功能</th>
-      </tr>
-    </thead>
-    <tbody id="member-list">
-      {# member-list #}
-    </tbody>
-  </table>
+			</tr>
+		</thead>
+		<tbody id='search-bar'>
+			<tr>
+				<th scope="row"></th>
+				<td>
+					<select class="form-control" id="search-is-admin">
+						<option selected value="">全部</option>
+						<option value="1">管理員</option>
+						<option value="0">會員</option>
+					</select>
+				</td>
+				<td>
+					<input type="text" class="form-control" id="search-name" placeholder="會員名稱">
+				</td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+		<tbody
+			id="member-list">{# member-list #}
+		</tbody>
+	</table>
 
-  <div class="container">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center" id="page-id">
-        </ul>
-      </nav>
-  </div>
+	<div class="container">
+		<nav aria-label="Page navigation example">
+			<ul class="pagination justify-content-center" id="page-id"></ul>
+		</nav>
+	</div>
 
-  <div style="text-align:center">
-    <button type="submit" class="btn btn-primary btn-block mb-3" onclick="location.href='/'">返回</button>
-  </div>
+	<div style="text-align:center">
+		<button type="submit" class="btn btn-primary btn-block mb-3" onclick="location.href='/'">返回</button>
+	</div>
 
-  <script src="/javascripts/member-manager.js"></script>
+	<script src="/javascripts/member-manager.js"></script>
 {% endblock %}

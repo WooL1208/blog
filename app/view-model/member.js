@@ -5,8 +5,8 @@ var { getUsersDb, getSingleUserDb, deleteUserDb, editUserDb } = require('../mode
  * 取得所有使用者資訊
  * @returns {object} 使用者資訊
  */
-async function getUsers() {
-    const users = await getUsersDb();
+async function getUsers(isAdmin, name) {
+    const users = await getUsersDb(isAdmin, name);
     // console.log({'getUsers': users});
     return users;
 }
