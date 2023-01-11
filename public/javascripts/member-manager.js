@@ -27,7 +27,7 @@ const reloadMemberData = async (nowPage) => {
         return await res.json();
     });
     let memberList = '';
-    // let i = 0; i < memberResponse.length ; i++
+
     let dataRange = getDataLength(nowPage, memberResponse);
     if (memberResponse.length > 0) {
         if ((await dataRange).current == (await dataRange).total) {
@@ -101,12 +101,6 @@ const reloadMemberData = async (nowPage) => {
 };
 
 const getDataLength = async (nowPage, response) => {
-    // const response = await fetch('/api/member', {
-    //     method: 'GET'
-    // }).then(async (res) => {
-    //     return await res.json();
-    // });
-
     let dataTotal = response.length;
 
     // 預設每一頁只顯示十筆資料。
