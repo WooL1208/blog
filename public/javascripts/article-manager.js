@@ -100,7 +100,7 @@ const reloadPageNav = async (articleAmount) => {
     let pageHtml = '';
 
     // 上一頁按鈕
-    if (pageAmount > 1) {
+    if (currentPage > 1) {
         pageHtml += `<li class="page-item"><a class="page-link" href="#" data-page="${currentPage - 1}">＜</a></li>`;
     } else {
         pageHtml += `<li class="page-item disabled"><span class="page-link">＜</span></li>`;
