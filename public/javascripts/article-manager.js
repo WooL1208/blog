@@ -93,10 +93,8 @@ const getPageArticles = async (articles, page) => {
     return articles.slice(start, end);
 }
 
-const reloadPageNav = async (articleAmount) => {
+const reloadPageNav = async (pageAmount) => {
     const pageUl = document.getElementById("article-page-ul");
-    const pageAmount = Math.ceil(articleAmount / 10);
-    
     let pageHtml = '';
 
     // 上一頁按鈕
@@ -132,9 +130,13 @@ const switchPage = async (e) => {
 
 const reloadAll = async () => {
     const articles = await searchArticles();
+    const pageAmount = Math.ceil(articles.length / 10);
+    while (currentPage > pageAmount && currentPage !== 1){
+        --currentPage;
+    }
     const PageArticles = await getPageArticles(articles, currentPage);
     await reloadArticlesList(PageArticles);
-    await reloadPageNav(articles.length);
+    await reloadPageNav(pageAmount);
 }
 
 

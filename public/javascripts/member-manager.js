@@ -29,45 +29,47 @@ const reloadMemberData = async (nowPage) => {
     let memberList = '';
     // let i = 0; i < memberResponse.length ; i++
     let dataRange = getDataLength(nowPage, memberResponse);
-    if ((await dataRange).current == (await dataRange).total) {
-        for (let i = (await dataRange).min; i < memberResponse.length; i++) {
-            let identity;
-            if (memberResponse[i].is_admin == 1) {
-                identity = '管理員';
-            } else {
-                identity = '會員';
+    if (memberResponse.length > 0) {
+        if ((await dataRange).current == (await dataRange).total) {
+            for (let i = (await dataRange).min; i < memberResponse.length; i++) {
+                let identity;
+                if (memberResponse[i].is_admin == 1) {
+                    identity = '管理員';
+                } else {
+                    identity = '會員';
+                }
+                memberList += `
+                <tr>
+                    <th scope="row">${memberResponse[i].id}</th>
+                    <td>${identity}</td>
+                    <td>${memberResponse[i].name}</td>
+                    <td>${memberResponse[i].account}</td>
+                    <td>
+                        <a href="/member-manager/editor?id=${memberResponse[i].id}" class="btn btn-primary">編輯</a>
+                        <button type="button" class="btn btn-danger" onclick="deleteMember(${memberResponse[i].id}, ${(await dataRange).current})">刪除</button>
+                    </td>
+                </tr>`;
             }
-            memberList += `
-            <tr>
-                <th scope="row">${memberResponse[i].id}</th>
-                <td>${identity}</td>
-                <td>${memberResponse[i].name}</td>
-                <td>${memberResponse[i].account}</td>
-                <td>
-                    <a href="/member-manager/editor?id=${memberResponse[i].id}" class="btn btn-primary">編輯</a>
-                    <button type="button" class="btn btn-danger" onclick="deleteMember(${memberResponse[i].id}, ${(await dataRange).current})">刪除</button>
-                </td>
-            </tr>`;
-        }
-    } else {
-        for (let i = (await dataRange).min; i < (await dataRange).max; i++) {
-            let identity;
-            if (memberResponse[i].is_admin == 1) {
-                identity = '管理員';
-            } else {
-                identity = '會員';
+        } else {
+            for (let i = (await dataRange).min; i < (await dataRange).max; i++) {
+                let identity;
+                if (memberResponse[i].is_admin == 1) {
+                    identity = '管理員';
+                } else {
+                    identity = '會員';
+                }
+                memberList += `
+                <tr>
+                    <th scope="row">${memberResponse[i].id}</th>
+                    <td>${identity}</td>
+                    <td>${memberResponse[i].name}</td>
+                    <td>${memberResponse[i].account}</td>
+                    <td>
+                        <a href="/member-manager/editor?id=${memberResponse[i].id}" class="btn btn-primary">編輯</a>
+                        <button type="button" class="btn btn-danger" onclick="deleteMember(${memberResponse[i].id}, ${(await dataRange).current})">刪除</button>
+                    </td>
+                </tr>`;
             }
-            memberList += `
-            <tr>
-                <th scope="row">${memberResponse[i].id}</th>
-                <td>${identity}</td>
-                <td>${memberResponse[i].name}</td>
-                <td>${memberResponse[i].account}</td>
-                <td>
-                    <a href="/member-manager/editor?id=${memberResponse[i].id}" class="btn btn-primary">編輯</a>
-                    <button type="button" class="btn btn-danger" onclick="deleteMember(${memberResponse[i].id}, ${(await dataRange).current})">刪除</button>
-                </td>
-            </tr>`;
         }
     }
 

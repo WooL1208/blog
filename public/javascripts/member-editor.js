@@ -14,14 +14,14 @@ const getUser = async () => {
 const setUser = async () => {
     const user = await getUser();
     document.getElementById('edit-name').value = user.name;
+    let opt = document.getElementById('identity').getElementsByTagName('option');
+    opt[user.is_admin + 1].selected = true;
 }
 
 const editMember = async (event) => {
     event.preventDefault();
     const identity = document.getElementById('identity').value;
     const member = document.getElementById('edit-name').value;
-
-    // console.log(identity, member);
 
     const response = await fetch('/api/member', {
         method: 'PUT',
