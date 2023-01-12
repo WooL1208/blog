@@ -13,8 +13,12 @@ const showArticle = async () => {
     });
 
     let articleContent = `
+    <div class="card-header">
+        ${response[0].category}
+    </div>
     <div class="card-body">
         <h1 class="card-title">${ escapeHtml(response[0].title) }</h1>
+        <h4 class="card-subtitle mb-2 text-muted">${ response[0].name }</h4>
         <p class="card-text">${ escapeHtml(response[0].content) }</p>
     </div>
     `;
@@ -59,10 +63,9 @@ const showComment = async () => {
         return a.createdAt < b.createdAt ? 1 : -1;
     });
 
-    let readComment = '';
+    let readComment = `${response.length} 則留言`;
 
     for (let i = 0; i < response.length; i++) {
-
         const userInfo = await fetch(`/api/member?id=${response[i].user_id}`, {
             method: 'GET',
         }).then(async (res) => {
@@ -105,6 +108,7 @@ const addComment = async () => {
     });
     console.log(response);
     if (response.status) {
+        document.getElementById('write-comment').value = '';
         await reloadAll();
     } else {
         document.getElementById('comment-warning').style.visibility = 'visible';

@@ -1,11 +1,13 @@
 let { promisePool: mysql } = require('../lib/mysql');
 let { register } = require('../app/view-model/users');
 let { addArticle } = require('../app/view-model/articles');
+let { addComment } = require('../app/view-model/comments');
 const { faker } = require('@faker-js/faker');
 
 const authorAmount = 5; // 作者數量
 const userAmount = 50; // 一般使用者數量
 const articleAmount = 50; // 文章數量
+const commentAmount = 100; // 留言數量
 
 /**
  * 產生使用者假資料
@@ -83,7 +85,12 @@ async function generateMessages() {
             CONSTRAINT \`message_ibfk_5\` FOREIGN KEY (\`article_id\`) REFERENCES \`articles\` (\`id\`) ON DELETE CASCADE ON UPDATE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     `);
-    /* TODO: 生成資料 */
+    for (let i = 0; i < commentAmount; ++i) {
+        let userId = Math.floor(Math.random() * userAmount + 2);
+        let articleId = Math.floor(Math.random() * articleAmount + 1);
+        let content = faker.lorem.sentence();
+        await addComment(userId, articleId, content);
+    }
 }
 
 /**

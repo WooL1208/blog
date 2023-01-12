@@ -7,14 +7,14 @@
         <textarea class="form-control" placeholder="寫下留言" id="write-comment" rows="3"></textarea>
     </div>
     <div class="row justify-content-between mb-3">
-        <div class="col-2" id="user-name"></div>
+        <div class="col-2 fs-4" id="user-name"></div>
         <div class="col-2 text-end">
             <button type="button" class="btn btn-primary" id="add-comment" disabled>留言</button>
         </div>
-        {# <div class="alert alert-danger" role="alert" style="visibility:hidden" id="comment-warning">
-            留言失敗，請重新輸入
-        </div> #}
     </div>
+    {# <div class="alert alert-danger" role="alert" style="visibility:hidden" id="comment-warning">
+        留言失敗，請重新輸入
+    </div> #}
     <div id="read-comment"></div>
 
     <script type="module" src="/javascripts/comments.js"></script>
