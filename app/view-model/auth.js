@@ -70,12 +70,12 @@ async function checkToken(req, res, next) {
             req.userId = retAccount[0].id;
         } else {
             req.isAdmin = false;
-            req.isLogin = false;
+            req.isLoggedIn = false;
         }
     }
     else {
         req.isAdmin = false;
-        req.isLogin = false;
+        req.isLoggedIn = false;
     }
     next();
 };
