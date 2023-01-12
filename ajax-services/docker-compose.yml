@@ -22,5 +22,6 @@ services:
       - db:/var/lib/mysql
       - ./mysql-dump:/docker-entrypoint-initdb.d
     environment:
+      TZ: Asia/Taipei
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: blog
