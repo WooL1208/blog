@@ -42,13 +42,18 @@ const editMember = async (event) => {
     });
 
     if (response.status) {
-        location = '/member-manager?page=${params.page}';
+        await returnToMember();
     } else {
         document.getElementById('member-warning').style.visibility = "visible";
     }
 }
 
+const returnToMember = async () => {
+    location = `/member-manager?page=${params.page}&isAdmin=${params.searchIdentity}&name=${params.searchUser}`;
+}
+
 document.getElementById('edit-member').addEventListener('click', editMember);
+document.getElementById('return-member').addEventListener('click', returnToMember)
 document.addEventListener("DOMContentLoaded", function () {
     setUser();
 });
