@@ -1,5 +1,5 @@
 ﻿require('dotenv').config();
-var { getAccount, registerAccount } = require('../model/users');
+var { getAccount, registerAccount, updateAccountDb, getAccountByIdDb } = require('../model/users');
 var argon2 = require('argon2');
 
 /**
@@ -26,4 +26,32 @@ async function register(name, account, password, isAdmin) {
     }
 }
 
-module.exports = { register };
+async function updateAccount(id, name, oldPassword, newPassword) {
+    // 取得符合的帳戶資料
+    let hashedNewPassword = undefined;
+    const retAccount = await getAccountByIdDb(id);
+
+    // 判斷有沒有這個帳號
+    if (retAccount.length != 1) {
+        return false;
+    }
+
+    
+    if (newPassword !== '' && newPassword !== undefined) {
+        // 判斷密碼是否正確
+        hashedNewPassword = await argon2.hash(newPassword);
+
+        const user = retAccount[0];
+        if (!await argon2.verify(user.password, oldPassword)) {
+            return false;
+        }
+    }
+    
+    if(await updateAccountDb(id, name, hashedNewPassword)) {
+        return true;
+    }else {
+        return false;
+    }
+}
+
+module.exports = { register, updateAccount };

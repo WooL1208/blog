@@ -11,6 +11,16 @@ async function getAccount(account) {
 }
 
 /**
+ * 從DB取得指定帳號資訊
+ * @param {string} id 帳號ID
+ * @returns {object} 帳號資訊
+ */
+async function getAccountByIdDb(id) {
+    const [rows, fields] = await mysql.execute('SELECT * FROM `users` WHERE id = ?', [id]);
+    return rows;
+}
+
+/**
  * 註冊帳號
  * @param {string} name 使用者名稱
  * @param {string} account 帳號
@@ -27,4 +37,29 @@ async function registerAccount(name, account, hashedPassword, isAdmin) {
     }
 }
 
-module.exports = { getAccount, registerAccount };
+/**
+ * 更新帳號資訊
+ * @param {number} id 帳號ID
+ * @param {string} name 使用者名稱
+ * @param {string} hashedPassword 雜湊密碼
+ */
+async function updateAccountDb(id, name, hashedPassword) {
+
+    if(name){
+        try {
+            const [rows, fields] = await mysql.execute('UPDATE `users` SET name = ? WHERE id = ?', [name, id]);
+        } catch (err) {
+            return false;
+        }
+    }
+    if(hashedPassword){
+        try {
+            const [rows, fields] = await mysql.execute('UPDATE `users` SET password = ? WHERE id = ?', [hashedPassword, id]);
+        } catch (err) {
+            return false;
+        }
+    }
+    return true;
+}
+
+module.exports = { getAccount, registerAccount, updateAccountDb, getAccountByIdDb };

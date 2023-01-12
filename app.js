@@ -11,6 +11,7 @@ var usersRouter = require('./routes/users');
 var memberManagerRouter = require('./routes/member-manager');
 var articleManagerRouter = require('./routes/article-manager');
 var commentsRouter = require('./routes/comments');
+var userdataRouter = require('./routes/userdata');
 
 // backend routes
 var authApiRouter = require('./routes/api/auth');
@@ -41,6 +42,7 @@ app.use('/users', usersRouter);
 app.use('/member-manager', memberManagerRouter);
 app.use('/article-manager', articleManagerRouter);
 app.use('/comments', commentsRouter);
+app.use('/userdata', userdataRouter);
 
 // backend routes
 app.use('/api/auth', authApiRouter);

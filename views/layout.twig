@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>{{ title }}</title>
-		<link rel='stylesheet' href='/stylesheets/style.css' />
+		<link rel='stylesheet' href='/stylesheets/style.css'/>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 		<script type="module" src="/javascripts/utils.js"></script>
@@ -19,6 +19,9 @@
 							<a class="nav-link active" aria-current="page" href="/">Home</a>
 						</li>
 						{% if (isLoggedIn) %}
+							<li>
+								<a class="nav-link" id="userdata" href="/userdata">會員資料</a>
+							</li>
 							<li>
 								<a class="nav-link" id="logout" href="/">會員登出</a>
 							</li>
@@ -44,10 +47,10 @@
 						{% endif %}
 					</ul>
 					{% if (title) == 'Blog' %}
-					<form class="d-flex" role="search">
-						<input class="form-control me-2" type="search" placeholder="文章標題" aria-label="Search" id="title" name="title">
-						<button class="btn btn-outline-light" type="submit">Search</button>
-					</form>
+						<form class="d-flex" role="search">
+							<input class="form-control me-2" type="search" placeholder="文章標題" aria-label="Search" id="title" name="title">
+							<button class="btn btn-outline-light" type="submit">Search</button>
+						</form>
 					{% endif %}
 				</div>
 			</div>
@@ -60,6 +63,6 @@
 			</div>
 		</div>
 		<script src="/javascripts/logout.js"></script>
-		<script type="text/javascript" color="211,88,106" pointcolor="211,88,106" opacity='1' zIndex="-2" count="200" src="/javascripts/canvas-nest.js"></script>
+		<script type="text/javascript" color="211,88,106" pointcolor="211,88,106" opacity='1' zindex="-2" count="200" src="/javascripts/canvas-nest.js"></script>
 	</body>
 </html>

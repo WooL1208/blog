@@ -1,0 +1,31 @@
+﻿{% extends 'layout.twig' %}
+
+{% block body %}
+	<h1>{{title}}</h1>
+
+	<form>
+		<div class="mb-3">
+			<label for="username" class="form-label">名稱</label>
+			<input type="text" class="form-control" id="username"></input>
+		</div>
+		<div class="mb-3">
+			<label for="old-password" class="form-label">舊密碼</label>
+			<input type="password" class="form-control" id="old-password"></input>
+		</div>
+		<div class="mb-3">
+			<label for="new-password" class="form-label">新密碼</label>
+			<input type="password" class="form-control" id="new-password"></input>
+		</div>
+
+		<div style="text-align:left">
+			<button type="button" class="btn btn-primary btn-block mb-3" id="edit-btn">修改</button>
+			<button type="button" class="btn btn-secondary btn-block mb-3" id="return-btn">返回</button>
+		</div>
+
+		<div class="alert alert-danger" role="alert" style="display:none" id="warning">
+			發生錯誤
+		</div>
+	</form>
+
+	<script type="module" src="/javascripts/userdata.js"></script>
+{% endblock body %}
