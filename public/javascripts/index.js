@@ -1,33 +1,39 @@
 ﻿import { escapeHtml } from './utils.js';
 
-const getArticles = async(response) => {
+const getArticles = async() => {
     const checked = await document.querySelector('input[name=btnradio]:checked')
-
-    if (checked.id === 'btnradio1') {
-        return response
-    }
-    if (checked.id === 'btnradio2') {
-        return response.filter(article => article.category === '生活')
-    }
-    if (checked.id === 'btnradio3') {
-        return response.filter(article => article.category === '科技')
-    }
-    if (checked.id === 'btnradio4') {
-        return response.filter(article => article.category === '美食')
-    }
-    if (checked.id === 'btnradio5') {
-        return response.filter(article => article.category === '理財')
-    }
-};
-
-const reloadArticles = async() => {
+    const keyword = await document.getElementById('keyword').value;
     const response = await fetch('/api/articles', {
         method: 'GET',
     }).then(async (res) => {
         return await res.json();
     });
 
-    const articles = await getArticles(response);
+    let articles = [];
+    if (checked.id === 'btnradio1') {
+        articles =  response;
+    }
+    if (checked.id === 'btnradio2') {
+        articles = response.filter(article => article.category === '生活')
+    }
+    if (checked.id === 'btnradio3') {
+        articles = response.filter(article => article.category === '科技')
+    }
+    if (checked.id === 'btnradio4') {
+        articles = response.filter(article => article.category === '美食')
+    }
+    if (checked.id === 'btnradio5') {
+        articles = response.filter(article => article.category === '理財')
+    }
+    if (keyword !== '') {
+        articles = articles.filter(article => article.title.includes(keyword))
+    }
+
+    return articles;
+};
+
+const reloadArticles = async() => {
+    const articles = await getArticles();
 
     let articleList = '';
 
@@ -35,7 +41,7 @@ const reloadArticles = async() => {
         if (i % 3 === 0) {
             articleList += `<div class="row mb-3">`
         }
-        const articleContent = response[i].content.slice(0, 100);
+        const articleContent = articles[i].content.slice(0, 100);
         articleList += `
         <div class="col-sm-4">
             <div class="card">
@@ -63,5 +69,5 @@ const reloadArticles = async() => {
 };
 
 document.querySelectorAll('input[name=btnradio]').forEach(input => input.addEventListener('change', reloadArticles))
-
+document.getElementById('search-articles').addEventListener('click', reloadArticles)
 reloadArticles();
