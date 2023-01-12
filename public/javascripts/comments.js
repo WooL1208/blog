@@ -23,15 +23,13 @@ const showArticle = async () => {
 
 const showUserName = async (userInfo) => {
     let userName = '';
-    console.log(userInfo);
     if (userInfo) {
-        console.log(userInfo.name);
         userName = `
         <label>${userInfo.name}</label>
         `;
     } else {
         userName = `
-        <span class="text-sm font-medium">尚未登入</span>
+        <label>尚未登入</label>
         `;
     }
 
@@ -40,19 +38,49 @@ const showUserName = async (userInfo) => {
 
 const showCommentBtn = async (userInfo) => {
     const commentContent = document.getElementById(`write-comment`).value;
-    let commentBtn = '';
 
     if (commentContent !== '' && userInfo) {
-        commentBtn = `
-        <button class="btn btn-primary" id="add-comment">留言</button>
-        `;
+        document.getElementById(`add-comment`).disabled = false;
     } else {
-        commentBtn = `
-        <button class="btn btn-primary" disabled>留言</button>
+        document.getElementById(`add-comment`).disabled = true;
+    }
+};
+
+const showComment = async () => {
+    const response = await fetch(`/api/comments?id=${params.id}`, {
+        method: 'GET'
+    }).then(async (res) => {
+        return await res.json();
+    });
+
+    response.sort(function (a, b) {
+        return a.createdAt < b.createdAt ? 1 : -1;
+    });
+
+    let readComment = '';
+
+    for (let i = 0; i < response.length; i++) {
+
+        const userInfo = await fetch(`/api/member?id=${response[i].user_id}`, {
+            method: 'GET',
+        }).then(async (res) => {
+            return await res.json();
+        });
+        console.log(userInfo.name);
+        let commentUserName = userInfo.name;
+        let commentContent = response[i].content;
+
+        readComment += `
+        <div class="card mb-1">
+            <div class="card-body">
+                <h5 class="card-title">${ commentUserName }</h5>
+                <p class="card-text">${ commentContent }</p>
+            </div>
+        </div>
         `;
     }
 
-    document.querySelector(`#comment-btn`).innerHTML = commentBtn;
+    document.querySelector(`#read-comment`).innerHTML = readComment;
 };
 
 const addComment = async () => {
@@ -76,41 +104,11 @@ const addComment = async () => {
     });
     console.log(response);
     if (response.status) {
-        location = `/comment?id=${articleId}`;
+        //location = `/comments?id=${articleId}`;
+        await reloadAll();
     } else {
         document.getElementById('comment-warning').style.visibility = 'visible';
     }
-};
-
-const showComment = async () => {
-    const response = await fetch(`/api/comments?id=${params.id}`, {
-        method: 'GET'
-    }).then(async (res) => {
-        return await res.json();
-    });
-
-    response.sort(function (a, b) {
-        return a.createdAt < b.createdAt ? 1 : -1;
-    });
-
-    let readComment = '';
-
-    for (let i = 0; i < response.length; i++) {
-
-        const commentUserName = response[i].name;
-        const commentContent = response[i].content;
-
-        readComment += `
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title>${ commentUserName }</h5>
-                <p class="card-text">${ commentContent }</p>
-            </div>
-        </div>
-        `;
-    }
-
-    document.querySelector(`#read-comment`).innerHTML = readComment;
 };
 
 const reloadAll = async () => {
@@ -120,12 +118,12 @@ const reloadAll = async () => {
         return await res.json();
     });
 
-    showArticle();
-    showUserName(response);
-    showCommentBtn(response);
-    showComment();
+    await showArticle();
+    await showUserName(response);
+    await showCommentBtn(response);
+    await showComment();
 };
 
-reloadAll();
 document.getElementById(`write-comment`).addEventListener('change', showCommentBtn);
 document.getElementById(`add-comment`).addEventListener('click', addComment);
+reloadAll();

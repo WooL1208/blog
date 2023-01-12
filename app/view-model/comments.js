@@ -19,9 +19,7 @@ async function getComments(id) {
  * @returns {boolean} 是否新增成功
  */
 async function addComment(userId, articleId, content) {
-    const createdAt = new Date();
-    const updatedAt = new Date();
-    if (await addComment(userId, articleId, content, createdAt, updatedAt)) {
+    if (await addComment(userId, articleId, content)) {
         return true;
     } else {
         return false;
