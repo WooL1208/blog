@@ -35,6 +35,7 @@ const deleteArticle = async (id) => {
  */
 const reloadArticlesList = async (articles) => {
     let articlesList = '';
+    console.log(articles);
     for (let i = 0; i < articles.length; i++) {
         let createdAt = new Date(articles[i].createdAt).toLocaleString('zh-TW', { timeZone: 'UTC', hour12: false })
         let updatedAt = new Date(articles[i].updatedAt).toLocaleString('zh-TW', { timeZone: 'UTC', hour12: false })
@@ -153,4 +154,4 @@ if (params.searchCategory){
     searchCategory = params.searchCategory;
     document.getElementById('search-category').value = searchCategory;
 }
-reloadArticlesList(await reloadAll());
+await reloadAll();
