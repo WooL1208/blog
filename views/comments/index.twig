@@ -12,9 +12,9 @@
             <button type="button" class="btn btn-primary" id="add-comment" disabled>留言</button>
         </div>
     </div>
-    {# <div class="alert alert-danger" role="alert" style="visibility:hidden" id="comment-warning">
-        留言失敗，請重新輸入
-    </div> #}
+    <div class="alert alert-danger d-none" role="alert" id="comment-warning">
+        請先登入後再留言
+    </div>
     <div id="read-comment"></div>
 
     <script type="module" src="/javascripts/comments.js"></script>

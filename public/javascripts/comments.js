@@ -34,7 +34,7 @@ const showUserName = async (userInfo) => {
         `;
     } else {
         userName = `
-        <label>登入後才可以留言</label>
+        <label>登入後留言</label>
         `;
     }
 
@@ -96,22 +96,25 @@ const addComment = async () => {
     const userId = userInfo.id;
     const articleId = params.id;
     const content = document.getElementById(`write-comment`).value;
-
-    const response = await fetch('/api/comments', {
-        method: 'POST',
-        body: JSON.stringify({ userId, articleId, content }),
-        headers: {
-            'content-type': 'application/json',
-        },
-    }).then(async (res) => {
-        return await res.json();
-    });
-    console.log(response);
-    if (response.status) {
-        document.getElementById('write-comment').value = '';
-        await reloadAll();
+    if (userId) {
+        const response = await fetch('/api/comments', {
+            method: 'POST',
+            body: JSON.stringify({ userId, articleId, content }),
+            headers: {
+                'content-type': 'application/json',
+            },
+        }).then(async (res) => {
+            return await res.json();
+        });
+        console.log(response);
+        if (response.status) {
+            document.getElementById('write-comment').value = '';
+            await reloadAll();
+        } else {
+            document.getElementById('comment-warning').className = 'alert alert-danger';
+        }
     } else {
-        document.getElementById('comment-warning').style.visibility = 'visible';
+        document.getElementById('comment-warning').className = 'alert alert-danger';
     }
 };
 const reloadCommentBtn = async () => {
@@ -126,7 +129,6 @@ const reloadAll = async () => {
     const response = await fetch(`/api/member/now`, {
         method: 'GET'
     }).then(async (res) => {
-        console.log(res.status);
         return await res.json();
     });
     await showCommentBtn(response);
