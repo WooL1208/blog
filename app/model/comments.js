@@ -18,9 +18,9 @@ async function getComments(id) {
  * @param {string} content 留言內容
  * @returns {boolean} 是否新增成功
  */
-async function addComment(userId, articleId, content, createdAt, updatedAt) {
+async function addComment(userId, articleId, content) {
     try {
-        const [rows, fields] = await mysql.execute('INSERT INTO `messages` (user_id, article_id, content, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)', [userId, articleId, content, createdAt, updatedAt]);
+        const [rows, fields] = await mysql.execute('INSERT INTO `messages` (user_id, article_id, content) VALUES (?, ?, ?)', [userId, articleId, content]);
         return true;
     }
     catch (err) {
