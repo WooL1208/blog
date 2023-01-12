@@ -32,61 +32,34 @@ const reloadMemberData = async (nowPage) => {
     });
     let memberList = '';
     let editBtn = '';
-    
-    let dataRange = getDataLength(nowPage, memberResponse);
-    if (memberResponse.length > 0) {
-        if ((await dataRange).current == (await dataRange).total) {
-            for (let i = (await dataRange).min; i < memberResponse.length; i++) {
-                let identity;
-                if (memberResponse[i].is_admin == 1) {
-                    identity = '管理員';
-                } else {
-                    identity = '會員';
-                }
-                if (memberResponse[i].id == 1) {
-                    editBtn = `<td><button style="visibility:hidden" class="btn btn-primary">編輯</button></td>`;
-                } else {
-                    editBtn = `<td>
-                                    <a href="/member-manager/editor?id=${memberResponse[i].id}&page=${(await dataRange).current}&searchIdentity=${isAdmin}&searchUser=${username}" class="btn btn-primary">編輯</a>
-                                    <button type="button" class="btn btn-danger" onclick="deleteMember(${memberResponse[i].id}, ${(await dataRange).current})">刪除</button>
-                                </td> `;
-                }
 
-                memberList += `
-                <tr>
-                    <th scope="row">${memberResponse[i].id}</th>
-                    <td>${identity}</td>
-                    <td>${memberResponse[i].name}</td>
-                    <td>${memberResponse[i].account}</td>` +
-                    `${editBtn}` +
-                `</tr>`;
+    let dataRange = await getDataLength(nowPage, memberResponse);
+    let memberDataList = memberResponse.slice(dataRange.min, dataRange.max);
+    if (memberDataList.length > 0) {
+        for (let i = 0; i < memberDataList.length; i++) {
+            let identity;
+            if (memberDataList[i].is_admin == 1) {
+                identity = '管理員';
+            } else {
+                identity = '會員';
             }
-        } else {
-            for (let i = (await dataRange).min; i < (await dataRange).max; i++) {
-                let identity;
-                if (memberResponse[i].is_admin == 1) {
-                    identity = '管理員';
-                } else {
-                    identity = '會員';
-                }
-                if (memberResponse[i].id == 1) {
-                    editBtn = `<td><button style="visibility:hidden" class="btn btn-primary">編輯</button></td>`;
-                } else {
-                    editBtn = `<td>
-                                    <a href="/member-manager/editor?id=${memberResponse[i].id}&page=${(await dataRange).current}&searchIdentity=${isAdmin}&searchUser=${username}" class="btn btn-primary">編輯</a>
-                                    <button type="button" class="btn btn-danger" onclick="deleteMember(${memberResponse[i].id}, ${(await dataRange).current})">刪除</button>
-                                </td> `;
-                }
+            if (memberDataList[i].id == 1) {
+                editBtn = `<td><button style="visibility:hidden" class="btn btn-primary">編輯</button></td>`;
+            } else {
+                editBtn = `<td>
+                                <a href="/member-manager/editor?id=${memberDataList[i].id}&page=${dataRange.current}&searchIdentity=${isAdmin}&searchUser=${username}" class="btn btn-primary">編輯</a>
+                                <button type="button" class="btn btn-danger" onclick="deleteMember(${memberDataList[i].id}, ${dataRange.current})">刪除</button>
+                            </td> `;
+            }
 
-                memberList += `
-                <tr>
-                    <th scope="row">${memberResponse[i].id}</th>
-                    <td>${identity}</td>
-                    <td>${memberResponse[i].name}</td>
-                    <td>${memberResponse[i].account}</td>` +
-                    `${editBtn}` +
-                `</tr>`;
-            }
+            memberList += `
+            <tr>
+                <th scope="row">${memberDataList[i].id}</th>
+                <td>${identity}</td>
+                <td>${memberDataList[i].name}</td>
+                <td>${memberDataList[i].account}</td>` +
+                `${editBtn}` +
+            `</tr>`;
         }
     }
 
@@ -94,14 +67,14 @@ const reloadMemberData = async (nowPage) => {
 
     let str = '';
 
-    if ((await dataRange).hasPage) {
-        str += `<li class="page-item"><a class="page-link" href="#" data-page="${Number((await dataRange).current) - 1}">＜</a></li>`;
+    if (dataRange.hasPage) {
+        str += `<li class="page-item"><a class="page-link" href="#" data-page="${Number(dataRange.current) - 1}">＜</a></li>`;
     } else {
         str += `<li class="page-item disabled"><span class="page-link">＜</span></li>`;
     }
 
-    for (let i = 1; i <= (await dataRange).total; i++) {
-        if (Number((await dataRange).current) === i) {
+    for (let i = 1; i <= dataRange.total; i++) {
+        if (Number(dataRange.current) === i) {
             str += `<li class="page-item active"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
         } else {
             str += `<li class="page-item"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
@@ -109,7 +82,7 @@ const reloadMemberData = async (nowPage) => {
     };
 
     if ((await dataRange).hasNext) {
-        str += `<li class="page-item"><a class="page-link" href="#" data-page="${Number((await dataRange).current) + 1}">＞</a></li>`;
+        str += `<li class="page-item"><a class="page-link" href="#" data-page="${Number(dataRange.current) + 1}">＞</a></li>`;
     } else {
         str += `<li class="page-item disabled"><span class="page-link">＞</span></li>`;
     }
