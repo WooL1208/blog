@@ -4,6 +4,10 @@ require('dotenv').config();
 
 // 登入頁面
 router.get("/", function (req, res, next) {
+  if(req.isAdmin === false) {
+    return res.redirect("/warning");
+  }
+  
   res.render("userdata/index", { title: '會員資料', isLoggedIn: req.isLoggedIn, isAdmin: req.isAdmin});
 });
 
