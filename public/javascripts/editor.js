@@ -21,7 +21,7 @@ const addArticle = async (event) => {
     });
 
     if (response.status) {
-        location = '/article-manager';
+        await returnToManager();
     } else {
         document.getElementById('warning').style.visibility = "visible";
     }
@@ -63,19 +63,21 @@ const editArticle = async (event) => {
     });
 
     if (response.status) {
-        location = '/article-manager';
+        await returnToManager();
     } else {
         document.getElementById('warning').style.visibility = "visible";
     }
 
 }
 
+const returnToManager = async () => {
+    location = `/article-manager?page=${params.page}&searchTitle=${params.searchTitle}&searchCategory=${params.searchCategory}`;
+}
+
 function auto_grow(element) {
     element.style.height = "5px";
     element.style.height = (element.scrollHeight)+"px";
 }
-
-
 
 if (params.mode == 'add') {
     document.getElementById('add-article').style.display = 'inline-block';
@@ -89,3 +91,4 @@ if (params.mode == 'add') {
 
 document.getElementById('add-article').addEventListener('click', addArticle);
 document.getElementById('edit-article').addEventListener('click', editArticle);
+document.getElementById('return-btn').addEventListener('click', returnToManager);

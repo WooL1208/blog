@@ -1,5 +1,12 @@
 import { escapeHtml } from './utils.js';
+
 let currentPage = 1;
+let searchTitle = '';
+let searchCategory = '';
+
+const params = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop),
+});
 
 /**
  * 刪除文章
@@ -40,7 +47,7 @@ const reloadArticlesList = async (articles) => {
             <td>${createdAt}</td>
             <td>${updatedAt}</td>
             <td style="text-align:right">
-                <a href="/article-manager/editor?mode=edit&id=${articles[i].id}" class="btn btn-primary">編輯</a>
+                <a href="/article-manager/editor?mode=edit&id=${articles[i].id}&page=${currentPage}&searchTitle=${searchTitle}&searchCategory=${searchCategory}" class="btn btn-primary">編輯</a>
                 <button type="button" class="btn btn-danger delete-btn" value=${articles[i].id}>刪除</button>
             </td>
         </tr>`;
@@ -55,29 +62,19 @@ const reloadArticlesList = async (articles) => {
     });
 }
 
-/**
- * 取得所有文章
- */
-const getAllArticles = async () => {
-    const response = await fetch('/api/articles', {
-        method: 'GET'
-    }).then(async (res) => {
-        return await res.json();
-    });
-    return response;
+const clickAddArticleBtn = async () => {
+    location = `/article-manager/editor?mode=add&page=${currentPage}&searchTitle=${searchTitle}&searchCategory=${searchCategory}`;
 }
 
 /**
  * 搜尋文章
  */
 const searchArticles = async () => {
-    const title = document.getElementById('search-title').value;
+    let title = document.getElementById('search-title').value;
     let category = document.getElementById('search-category').value;
-    console.log({title, category});
 
-    if (category == '全部') {
-        category = '';
-    }
+    searchTitle = title;
+    searchCategory = category;
 
     const response = await fetch(`/api/articles?title=${title}&category=${category}`, {
         method: 'GET'
@@ -143,4 +140,17 @@ const reloadAll = async () => {
 document.getElementById('search-title').addEventListener('keyup', reloadAll);
 document.getElementById('search-category').addEventListener('change', reloadAll);
 document.getElementById('article-page-ul').addEventListener('click', switchPage);
+document.getElementById('add-article-btn').addEventListener('click', clickAddArticleBtn);
+
+if (params.page){
+    currentPage = Number(params.page);
+}
+if (params.searchTitle){
+    searchTitle = params.searchTitle;
+    document.getElementById('search-title').value = searchTitle;
+}
+if (params.searchCategory){
+    searchCategory = params.searchCategory;
+    document.getElementById('search-category').value = searchCategory;
+}
 reloadArticlesList(await reloadAll());
