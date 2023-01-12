@@ -3,7 +3,7 @@ require('dotenv').config();
 var { getUsers, getSingleUser, deleteUser, editUser} = require('../../app/view-model/member');
 var router = express.Router();
 
-/* 
+/*
     取得會員資訊
     get /api/member
 */
@@ -21,7 +21,16 @@ router.get('/', async function (req, res, next) {
     }
 });
 
-/* 
+/*
+    取得現在會員資訊
+    get /api/member/now
+*/
+router.get('/now', async function (req, res, next) {
+    const user = await getSingleUser(req.userId);
+    return res.json(user);
+});
+
+/*
     刪除會員
     delete /api/member
 */
@@ -33,12 +42,12 @@ router.delete("/", async function (req, res, next) {
     }else{
         return res.json({ status: false, message: "刪除失敗" });
     }
-    
+
 });
 
 router.put("/", async function (req, res, next) {
     const { id, identity, member } = req.body;
-    
+
     if(req.isAdmin === false) {
         return res.json({ status: false, message: "修改失敗" });
     }

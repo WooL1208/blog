@@ -10,12 +10,14 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var memberManagerRouter = require('./routes/member-manager');
 var articleManagerRouter = require('./routes/article-manager');
+var commentsRouter = require('./routes/comments');
 
 // backend routes
 var authApiRouter = require('./routes/api/auth');
 var usersApiRouter = require('./routes/api/users');
 var articlesApiRouter = require('./routes/api/articles');
 var memberApiRouter = require('./routes/api/member');
+var commentsApiRouter = require('./routes/api/comments');
 
 var app = express();
 require('dotenv').config();
@@ -38,12 +40,14 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/member-manager', memberManagerRouter);
 app.use('/article-manager', articleManagerRouter);
+app.use('/comments', commentsRouter);
 
 // backend routes
 app.use('/api/auth', authApiRouter);
 app.use('/api/users', usersApiRouter);
 app.use('/api/articles', articlesApiRouter);
 app.use('/api/member', memberApiRouter);
+app.use('/api/comments', commentsApiRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
