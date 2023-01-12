@@ -8,7 +8,10 @@ const addArticle = async (event) => {
     const category = document.getElementById('category').value;
     const content = document.getElementById('content').value;
 
-    console.log(title, category, content);
+    if (title === '' || category === '' || content === '') {
+        document.getElementById('warning').style.display = "block";
+        return;
+    }
 
     const response = await fetch('/api/articles', {
         method: 'POST',
@@ -50,7 +53,10 @@ const editArticle = async (event) => {
     const category = document.getElementById('category').value;
     const content = document.getElementById('content').value;
 
-    console.log(title, category, content);
+    if (title === '' || category === '' || content === '') {
+        document.getElementById('warning').style.display = "block";
+        return;
+    }
 
     const response = await fetch('/api/articles', {
         method: 'PUT',
