@@ -42,7 +42,11 @@ const reloadArticles = async() => {
                     ${articles[i].category}
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">${escapeHtml(articles[i].title)}</h5>
+                    <h5 class="card-title">
+                        <a href="/comments?id=${articles[i].id}" class="card-link link-dark">
+                            ${escapeHtml(articles[i].title)}
+                        </a>
+                    </h5>
                     <p class="card-text">${escapeHtml(articles[i].content)}</p>
                 </div>
             </div>
