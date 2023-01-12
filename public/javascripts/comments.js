@@ -30,7 +30,7 @@ const showUserName = async (userInfo) => {
         `;
     } else {
         userName = `
-        <label>尚未登入</label>
+        <label>登入後才可以留言</label>
         `;
     }
 
@@ -41,6 +41,7 @@ const showCommentBtn = async (userInfo) => {
     const commentContent = document.getElementById(`write-comment`).value;
 
     if (commentContent !== '' && userInfo.id) {
+        console.log(userInfo.id);
         document.getElementById(`add-comment`).disabled = false;
     } else {
         document.getElementById(`add-comment`).disabled = true;
@@ -109,7 +110,14 @@ const addComment = async () => {
         document.getElementById('comment-warning').style.visibility = 'visible';
     }
 };
-
+const reloadCommentBtn = async () => {
+    const userInfo = await fetch(`/api/member/now`, {
+        method: 'GET'
+    }).then(async (res) => {
+        return await res.json();
+    });
+    await showCommentBtn(userInfo);
+}
 const reloadAll = async () => {
     const response = await fetch(`/api/member/now`, {
         method: 'GET'
@@ -117,14 +125,12 @@ const reloadAll = async () => {
         console.log(res.status);
         return await res.json();
     });
-    if (response.id) {
-        await showUserName(response);
-        await showCommentBtn(response);
-    }
+    await showCommentBtn(response);
+    await showUserName(response);
     await showArticle();
     await showComment();
 };
 
-document.getElementById(`write-comment`).addEventListener('keyup', showCommentBtn);
+document.getElementById(`write-comment`).addEventListener('keyup', reloadCommentBtn);
 document.getElementById(`add-comment`).addEventListener('click', addComment);
 reloadAll();
