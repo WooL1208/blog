@@ -16,6 +16,9 @@ const setUser = async () => {
     document.getElementById('edit-name').value = user.name;
     let opt = document.getElementById('identity').getElementsByTagName('option');
     opt[user.is_admin + 1].selected = true;
+    if (params.id == user.id) {
+        opt[user.is_admin].disabled = "disabled";
+    }
 }
 
 const editMember = async (event) => {
@@ -35,6 +38,7 @@ const editMember = async (event) => {
 
     if (response.status) {
         location = '/member-manager';
+        // reloadMemberData();
     } else {
         document.getElementById('member-warning').style.visibility = "visible";
     }
