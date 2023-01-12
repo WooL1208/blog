@@ -30,6 +30,10 @@ const editMember = async (event) => {
     event.preventDefault();
     const identity = document.getElementById('identity').value;
     const member = document.getElementById('edit-name').value;
+    if (member === '') {
+        document.getElementById('member-warning').style.display = "block";
+        return;
+    }
 
     const response = await fetch('/api/member', {
         method: 'PUT',
@@ -44,7 +48,8 @@ const editMember = async (event) => {
     if (response.status) {
         await returnToMember();
     } else {
-        document.getElementById('member-warning').style.visibility = "visible";
+        document.getElementById('member-warning').style.display = "block";
+        return;
     }
 }
 
