@@ -35,6 +35,7 @@ const editMember = async (event) => {
 
     if (response.status) {
         location = '/member-manager';
+        // reloadMemberData();
     } else {
         document.getElementById('member-warning').style.visibility = "visible";
     }
