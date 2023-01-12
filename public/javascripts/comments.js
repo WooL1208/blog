@@ -104,7 +104,6 @@ const addComment = async () => {
     });
     console.log(response);
     if (response.status) {
-        //location = `/comments?id=${articleId}`;
         await reloadAll();
     } else {
         document.getElementById('comment-warning').style.visibility = 'visible';
@@ -124,6 +123,6 @@ const reloadAll = async () => {
     await showComment();
 };
 
-document.getElementById(`write-comment`).addEventListener('change', showCommentBtn);
+document.getElementById(`write-comment`).addEventListener('keyup', showCommentBtn);
 document.getElementById(`add-comment`).addEventListener('click', addComment);
 reloadAll();
