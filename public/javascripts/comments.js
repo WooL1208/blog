@@ -13,6 +13,9 @@ const showArticle = async () => {
     });
 
     let articleContent = `
+    <div class="card-header">
+        ${response[0].category}
+    </div>
     <div class="card-body">
         <h1 class="card-title">${ escapeHtml(response[0].title) }</h1>
         <h4 class="card-subtitle mb-2 text-muted">${ response[0].name }</h4>
