@@ -108,6 +108,7 @@ const addComment = async () => {
     });
     console.log(response);
     if (response.status) {
+        document.getElementById('write-comment').value = '';
         await reloadAll();
     } else {
         document.getElementById('comment-warning').style.visibility = 'visible';
