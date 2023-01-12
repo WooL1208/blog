@@ -43,7 +43,7 @@ const reloadMemberData = async (nowPage) => {
                     editBtn = `<td><button style="visibility:hidden" class="btn btn-primary">編輯</button></td>`;
                 } else {
                     editBtn = `<td>
-                                    <a href="/member-manager/editor?id=${memberResponse[i].id}" class="btn btn-primary">編輯</a>
+                                    <a href="/member-manager/editor?id=${memberResponse[i].id}&page=${(await dataRange).current}}" class="btn btn-primary">編輯</a>
                                     <button type="button" class="btn btn-danger" onclick="deleteMember(${memberResponse[i].id}, ${(await dataRange).current})">刪除</button>
                                 </td> `;
                 }
