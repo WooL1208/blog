@@ -1,3 +1,7 @@
+const params = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop),
+});
+
 let pageId = document.getElementById('page-id');
 let isAdmin = '';
 let username = '';
@@ -43,7 +47,7 @@ const reloadMemberData = async (nowPage) => {
                     editBtn = `<td><button style="visibility:hidden" class="btn btn-primary">編輯</button></td>`;
                 } else {
                     editBtn = `<td>
-                                    <a href="/member-manager/editor?id=${memberResponse[i].id}&page=${(await dataRange).current}}" class="btn btn-primary">編輯</a>
+                                    <a href="/member-manager/editor?id=${memberResponse[i].id}&page=${(await dataRange).current}&searchIdentity=${isAdmin}&searchUser=${username}" class="btn btn-primary">編輯</a>
                                     <button type="button" class="btn btn-danger" onclick="deleteMember(${memberResponse[i].id}, ${(await dataRange).current})">刪除</button>
                                 </td> `;
                 }
@@ -69,7 +73,7 @@ const reloadMemberData = async (nowPage) => {
                     editBtn = `<td><button style="visibility:hidden" class="btn btn-primary">編輯</button></td>`;
                 } else {
                     editBtn = `<td>
-                                    <a href="/member-manager/editor?id=${memberResponse[i].id}" class="btn btn-primary">編輯</a>
+                                    <a href="/member-manager/editor?id=${memberResponse[i].id}&page=${(await dataRange).current}&searchIdentity=${isAdmin}&searchUser=${username}" class="btn btn-primary">編輯</a>
                                     <button type="button" class="btn btn-danger" onclick="deleteMember(${memberResponse[i].id}, ${(await dataRange).current})">刪除</button>
                                 </td> `;
                 }
@@ -135,7 +139,7 @@ function switchPage(e) {
     e.preventDefault();
     if (e.target.nodeName !== 'A') return;
     let page = e.target.dataset.page;
-    globalPage = page;
+    globalNowPage = page;
     reloadMemberData(page);
 }
 
@@ -147,4 +151,17 @@ document.getElementById('search-name').addEventListener('keyup', async (e) => { 
 
 pageId.addEventListener('click', switchPage);
 
-reloadMemberData(1);
+if (params.page) {
+    globalNowPage = Number(params.page);
+}
+if (params.isAdmin) {
+    isAdmin = Number(params.isAdmin);
+    document.getElementById('search-is-admin').value = isAdmin;
+}
+if (params.name) {
+    username = params.name;
+    document.getElementById('search-name').value = username;
+}
+
+
+reloadMemberData(globalNowPage);
