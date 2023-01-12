@@ -1,4 +1,4 @@
-﻿//import { escapeHtml } from './utils.js';
+﻿import { escapeHtml } from './utils.js';
 
 const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
@@ -13,8 +13,8 @@ const showArticle = async () => {
 
     let articleContent = `
     <div class="card-body">
-        <h1 class="card-title">${ response[0].title }</h1>
-        <p class="card-text">${ response[0].content }</p>
+        <h1 class="card-title">${ escapeHtml(response[0].title) }</h1>
+        <p class="card-text">${ escapeHtml(response[0].content) }</p>
     </div>
     `;
 
@@ -72,8 +72,8 @@ const showComment = async () => {
         readComment += `
         <div class="card mb-1">
             <div class="card-body">
-                <h5 class="card-title">${ commentUserName }</h5>
-                <p class="card-text">${ commentContent }</p>
+                <h5 class="card-title">${ escapeHtml(commentUserName) }</h5>
+                <p class="card-text">${ escapeHtml(commentContent) }</p>
             </div>
         </div>
         `;
