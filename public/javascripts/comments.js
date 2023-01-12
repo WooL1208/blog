@@ -23,7 +23,7 @@ const showArticle = async () => {
 
 const showUserName = async (userInfo) => {
     let userName = '';
-    if (userInfo) {
+    if (userInfo.id) {
         userName = `
         <label>${userInfo.name}</label>
         `;
@@ -39,7 +39,7 @@ const showUserName = async (userInfo) => {
 const showCommentBtn = async (userInfo) => {
     const commentContent = document.getElementById(`write-comment`).value;
 
-    if (commentContent !== '' && userInfo) {
+    if (commentContent !== '' && userInfo.id) {
         document.getElementById(`add-comment`).disabled = false;
     } else {
         document.getElementById(`add-comment`).disabled = true;
@@ -66,7 +66,6 @@ const showComment = async () => {
         }).then(async (res) => {
             return await res.json();
         });
-        console.log(userInfo.name);
         let commentUserName = userInfo.name;
         let commentContent = response[i].content;
 
@@ -114,12 +113,14 @@ const reloadAll = async () => {
     const response = await fetch(`/api/member/now`, {
         method: 'GET'
     }).then(async (res) => {
+        console.log(res.status);
         return await res.json();
     });
-
+    if (response.id) {
+        await showUserName(response);
+        await showCommentBtn(response);
+    }
     await showArticle();
-    await showUserName(response);
-    await showCommentBtn(response);
     await showComment();
 };
 

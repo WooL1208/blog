@@ -26,8 +26,12 @@ router.get('/', async function (req, res, next) {
     get /api/member/now
 */
 router.get('/now', async function (req, res, next) {
-    const user = await getSingleUser(req.userId);
-    return res.json(user);
+    if (req.userId) {
+        const user = await getSingleUser(req.userId);
+        return res.json(user);
+    } else {
+        return res.json({ status: false, message: "取得失敗" });
+    }
 });
 
 /*
