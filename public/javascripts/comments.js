@@ -59,10 +59,9 @@ const showComment = async () => {
         return a.createdAt < b.createdAt ? 1 : -1;
     });
 
-    let readComment = '';
+    let readComment = `${response.length} 則留言`;
 
     for (let i = 0; i < response.length; i++) {
-
         const userInfo = await fetch(`/api/member?id=${response[i].user_id}`, {
             method: 'GET',
         }).then(async (res) => {
