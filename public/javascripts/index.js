@@ -35,6 +35,7 @@ const reloadArticles = async() => {
         if (i % 3 === 0) {
             articleList += `<div class="row mb-3">`
         }
+        const articleContent = response[i].content.slice(0, 100);
         articleList += `
         <div class="col-sm-4">
             <div class="card">
@@ -48,7 +49,7 @@ const reloadArticles = async() => {
                         </a>
                     </h5>
                     <h6 class="card-subtitle mb-2 text-muted">${articles[i].name}</h6>
-                    <p class="card-text">${escapeHtml(articles[i].content)}</p>
+                    <p class="card-text">${escapeHtml(articleContent)}</p>
                 </div>
             </div>
         </div>
