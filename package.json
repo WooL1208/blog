@@ -21,5 +21,21 @@
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
     "sequelize-cli": "^6.5.2"
-  }
+  },
+  "description": "Install dependencies: > $ npm install",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WooL1208/blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WooL1208/blog/issues"
+  },
+  "homepage": "https://github.com/WooL1208/blog#readme"
 }

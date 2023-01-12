@@ -4,6 +4,7 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
 });
 
+
 const showArticle = async () => {
     const response = await fetch(`/api/articles?id=${params.id}`, {
         method: 'GET'
